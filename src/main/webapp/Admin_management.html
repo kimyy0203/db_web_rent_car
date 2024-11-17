@@ -88,6 +88,7 @@
 				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">									
 				                    <li class="scroll"><a href="Admin_rent.html">Car rent</a></li>
 									<li class="scroll"><a href="Admin_management.html">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.html">Cost</a></li>
 									<li class="scroll"><a href="Admin_login.html">Log out</a></li>
 									<!-- log out 부분 다시 생각해 봐야함.-->
 				                </ul><!--/.nav -->
@@ -134,6 +135,10 @@
 									<div class="single-model-search">
 										<h2>가격</h2>									
 										<input type="text" id="carPrice" placeholder="가격을 입력하세요" required>														
+									</div>
+									<div class="single-model-search">
+										<h2>차량 이름</h2>									
+										<input type="text" id="carName" placeholder="차량 이름을 입력하세요" required>														
 									</div>
 												
 									<div class="col-md-11 col-sm-12">
@@ -281,8 +286,9 @@
 			const carNumber = document.getElementById("carNumber").value;
 			const carModel = document.querySelector("#car-model").value;
 			const carPrice = document.getElementById("carPrice").value;
+			const carName = document.getElementById("carName").value;
 	
-			if (!carNumber || carModel === "default" || !carPrice) {
+			if (!carNumber || carModel === "default" || !carPrice || !carName) {
 				alert("모두 입력해주세요.");
 				return;
 			}
@@ -296,7 +302,8 @@
 				body: JSON.stringify({
 					car_number: carNumber,
 					model: carModel,
-					price: carPrice
+					price: carPrice,
+					car_Name: carName
 				})
 			})
 			.then(response => response.json())
