@@ -109,33 +109,36 @@
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div style="text-align:center">SIGN UP</div>
-									<div class="single-model-search">
-										<h2>ID</h2>									
-										<input type="text" id="user-id" placeholder="ID를 입력하세요" required>														
-									</div>
-									<div class="single-model-search">
-										<h2>PASSWORD</h2>									
-										<input type="password" id="user-password" placeholder="PASSWORD 입력하세요" required>											
-									</div>
-									<div class="single-model-search">
-										<h2>NAME</h2>									
-										<input type="text" id="user-name" placeholder="이름을 입력하세요" required>														
-									</div>														
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">
-											<button class="welcome-btn model-search-btn" onclick="loginFunction()">
-												Create
-											</button>
-											<button class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
-												user-Login
-											</button>
-											<button class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
-												admin-Login
-											</button>
+
+									<form id = "signup_Form" action="fc_signup_ok.jsp">
+										<div style="text-align:center">SIGN UP</div>
+										<div class="single-model-search">
+											<h2>ID</h2>									
+											<input type="text" id="User_id" placeholder="ID를 입력하세요" required>														
 										</div>
-									</div>
-									
+										<div class="single-model-search">
+											<h2>PASSWORD</h2>									
+											<input type="password" id="User_pw" placeholder="PASSWORD 입력하세요" required>											
+										</div>
+										<div class="single-model-search">
+											<h2>NAME</h2>									
+											<input type="text" id="User_name" placeholder="이름을 입력하세요" required>														
+										</div>														
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">
+												<button class="welcome-btn model-search-btn" onclick="signupFunction()">
+													Create
+												</button>
+												<button class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
+													user-Login
+												</button>
+												<button class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
+													admin-Login
+												</button>
+											</div>
+										</div>
+									</form>
+
 								</div>
 							</div>
 						</div>
@@ -202,10 +205,14 @@
         
 		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
 		<script>			
-			function loginFunction() {
-				const userId = document.getElementById("user-id").value;
-				const userPassword = document.getElementById("user-password").value;
-				const userName = document.getElementById("user-name").value;
+			function signupFunction() {
+
+				document.getElementById('signup_Form').submit();
+
+				/*
+				const userId = document.getElementById("User_id").value;
+				const userPassword = document.getElementById("User_pw").value;
+				const userName = document.getElementById("User_name").value;
 								
 				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
@@ -235,6 +242,8 @@
 					}
 				})
 				.catch(error => console.error("Error:", error));
+				*/	
+
 			}
 		
 			// HTML 페이지로 이동
