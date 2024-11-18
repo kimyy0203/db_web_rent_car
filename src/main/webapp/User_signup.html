@@ -121,11 +121,7 @@
 									<div class="single-model-search">
 										<h2>NAME</h2>									
 										<input type="text" id="user-name" placeholder="이름을 입력하세요" required>														
-									</div>
-									<div class="single-model-search">
-										<h2>주민등록번호</h2>									
-										<input type="text" id="user-number" placeholder="주민등록번호 입력하세요" required>														
-									</div>								
+									</div>														
 									<div class="col-md-11 col-sm-12">
 										<div class="single-model-search text-center">
 											<button class="welcome-btn model-search-btn" onclick="loginFunction()">
@@ -210,9 +206,8 @@
 				const userId = document.getElementById("user-id").value;
 				const userPassword = document.getElementById("user-password").value;
 				const userName = document.getElementById("user-name").value;
-				const userNumber = document.getElementById("user-number").value;
-				
-				if (!userId || !userPassword || !userName || !userNumber) {
+								
+				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
 					return;
 				}
@@ -226,8 +221,7 @@
 					body: JSON.stringify({ 
 						id: userId,
 						password: userPassword,
-						name: userName,
-						number: userNumber
+						name: userName						
 					 })
 				})
 				.then(response => response.json())
