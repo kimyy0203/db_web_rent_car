@@ -110,7 +110,7 @@
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 
-									<form id = "signup_Form" action="fc_signup_ok.jsp" method="post">
+									<form id = "signup_Form" action="fc_signup_ok.jsp" method="post" onsubmit="return signupFunction()">
 										<div style="text-align:center">SIGN UP</div>
 										<div class="single-model-search">
 											<h2>ID</h2>									
@@ -126,13 +126,13 @@
 										</div>														
 										<div class="col-md-11 col-sm-12">
 											<div class="single-model-search text-center">
-												<button class="welcome-btn model-search-btn" onclick="signupFunction()">
+												<button type="submit" class="welcome-btn model-search-btn">
 													Create
 												</button>
-												<button class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
 													user-Login
 												</button>
-												<button class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
 													admin-Login
 												</button>
 											</div>
@@ -207,18 +207,16 @@
 		<script>			
 			function signupFunction() {
 
-				const userId = document.getElementById("User_id").value;
-				const userPassword = document.getElementById("User_pw").value;
-				const userName = document.getElementById("User_name").value;
+				const userId = document.getElementById("User_id").value.trim;
+				const userPassword = document.getElementById("User_pw").value.trim;
+				const userName = document.getElementById("User_name").value.trim;
 
 				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
-					return;
-				}
-				else {
-					document.getElementById('signup_Form').submit();
+					return false;
 				}
 				
+				return true;
 
 				/*
 				//  POST 요청으로 서버로 회원가입 정보를 전송
