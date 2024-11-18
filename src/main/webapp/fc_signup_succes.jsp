@@ -8,7 +8,7 @@
 <body>
 
 	<h2>회원가입을 축하합니다</h2>
-	<a href="Admin_login.html">로그인하기</a>
+	<a href="User_login.html">로그인하기</a>
 
 </body>
 </html>

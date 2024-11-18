@@ -110,19 +110,19 @@
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 
-									<form id = "signup_Form" action="fc_signup_ok.jsp">
+									<form id = "signup_Form" action="fc_signup_ok.jsp" method="post">
 										<div style="text-align:center">SIGN UP</div>
 										<div class="single-model-search">
 											<h2>ID</h2>									
-											<input type="text" id="User_id" placeholder="ID를 입력하세요" required>														
+											<input type="text" id="User_id" name="User_id" placeholder="ID를 입력하세요" required>														
 										</div>
 										<div class="single-model-search">
 											<h2>PASSWORD</h2>									
-											<input type="password" id="User_pw" placeholder="PASSWORD 입력하세요" required>											
+											<input type="password" id="User_pw" name="User_pw" placeholder="PASSWORD 입력하세요" required>											
 										</div>
 										<div class="single-model-search">
 											<h2>NAME</h2>									
-											<input type="text" id="User_name" placeholder="이름을 입력하세요" required>														
+											<input type="text" id="User_name" name="User_name" placeholder="이름을 입력하세요" required>														
 										</div>														
 										<div class="col-md-11 col-sm-12">
 											<div class="single-model-search text-center">
@@ -207,18 +207,20 @@
 		<script>			
 			function signupFunction() {
 
-				document.getElementById('signup_Form').submit();
-
-				/*
 				const userId = document.getElementById("User_id").value;
 				const userPassword = document.getElementById("User_pw").value;
 				const userName = document.getElementById("User_name").value;
-								
+
 				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
 					return;
 				}
-		
+				else {
+					document.getElementById('signup_Form').submit();
+				}
+				
+
+				/*
 				//  POST 요청으로 서버로 회원가입 정보를 전송
 				fetch("your_login_api_endpoint", { // 회원가입 API의 엔드포인트 URL로 교체
 					method: "POST",
