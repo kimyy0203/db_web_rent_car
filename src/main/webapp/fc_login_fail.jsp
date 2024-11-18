@@ -6,9 +6,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h2>회원가입에 실패했습니다</h2>
-	<a href="User_signup.html">다시 가입하기</a>
+	
+	<h2>아이디와 비밀번호를 확인하세요</h2>
+	<a href="User_login.html">다시 로그인하기</a>
 
 </body>
 </html>

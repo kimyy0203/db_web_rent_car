@@ -63,7 +63,7 @@
 		response.sendRedirect("fc_signup_fail.jsp?error=exception");
 	} finally{
 		try{
-			if (rs != null) rs.close();
+			if(rs != null) rs.close();
 			if(conn != null) conn.close();
 			if(pstmt != null) pstmt.close();
 		} catch(Exception e){

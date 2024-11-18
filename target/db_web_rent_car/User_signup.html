@@ -207,9 +207,9 @@
 		<script>			
 			function signupFunction() {
 
-				const userId = document.getElementById("User_id").value.trim;
-				const userPassword = document.getElementById("User_pw").value.trim;
-				const userName = document.getElementById("User_name").value.trim;
+				const userId = document.getElementById("User_id").value.trim();
+				const userPassword = document.getElementById("User_pw").value.trim();
+				const userName = document.getElementById("User_name").value.trim();
 
 				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
@@ -243,7 +243,6 @@
 				})
 				.catch(error => console.error("Error:", error));
 				*/	
-
 			}
 		
 			// HTML 페이지로 이동
