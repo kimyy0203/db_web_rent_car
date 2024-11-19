@@ -1,3 +1,4 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -14,7 +15,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Hanseo Car rent_user_rent</title>
+        <title>Hanseo Car rent_admin_login</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -58,12 +59,10 @@
     </head>
 	
 	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
 	
 		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
+
 			<!-- top-area Start -->
 			<div class="top-area">
 				<div class="header-area">
@@ -77,16 +76,16 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
-							 <!-- Collect the nav links, forms, and other content for toggling -->
-							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">									
-									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
-								</ul>
-							</div>		
+
+				            <!-- Collect the nav links, forms, and other content for toggling -->
+				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">				                    
+				                </ul><!--/.nav -->
+				            </div><!-- /.navbar-collapse -->
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -101,120 +100,46 @@
 					<h2>we can service for you</h2>					
 				</div>
 			</div>
-
+			<!-- Admin_login start-->
 			<div class="container">
-				<div class="row" style="margin-bottom: 200px;">
+				<div class="row">
 					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div class="single-model-search">
-											<h2>Select Model</h2>										
-										<div class="model-select-icon">
-											<select id="carModelSelect" class="form-control" onchange="loadCars(this.value)">
-												<option value="">전체 보기</option>
-												<option value="소형차">소형차</option>
-												<option value="세단">세단</option>
-												<option value="SUV">SUV</option>
-												<option value="벤">벤</option>
-												<option value="기타">기타</option>
-											</select>
-										</div><!-- /.model-select-icon -->					
-									</div>
-									
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">
-											<button class="welcome-btn model-search-btn" onclick="loadCars(document.getElementById('carModelSelect').value)">
-												search
-											</button>
+
+									<form id = "login_admin_Form" action="fc_login_ok_admin.jsp" method="post" onsubmit="return loginFunction()">
+										<div style="text-align:center">ADMIN LOGIN</div>
+										<div class="single-model-search">
+											<h2>ID</h2>									
+											<input type="text" id="Admin_id" name="Admin_id" placeholder="ID를 입력하세요" required>														
 										</div>
-									</div>
-									
+										<div class="single-model-search">
+											<h2>PASSWORD</h2>									
+											<input type="password" id="Admin_pw" name="Admin_pw" placeholder="PASSWORD 입력하세요" required>											
+										</div>								
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">
+												<button type="submit" class="welcome-btn model-search-btn">
+													Login
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
+													user-login
+												</button>											
+											</div>
+										</div>
+									</form>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
+			<!-- Admin_login end-->
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
 
-		<section id="featured-cars" class="featured-cars">
-			<div class="container">
-				<div class="section-header">
-					<p>Various <span>types of</span> cars</p>
-					<h2>Type of car</h2>
-				</div>	
-				<div id="cars-list" class = "featured-cars-content">
-					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
-				</div>			
-			</div>
-		</section>
-		<script>
-			// 서버에서 차량 목록을 가져와서 표시하는 함수
-			function loadCars(model = "") {
-				// model 값에 따라 쿼리 문자열을 동적으로 추가
-				let url = '/get_cars';
-				if (model) {
-					url += `?model=${encodeURIComponent(model)}`;
-				}
-	
-				fetch(url)
-					.then(response => response.json())
-					.then(cars => {
-						const carsList = document.getElementById('cars-list');
-						carsList.innerHTML = ''; // 초기화
-						cars.forEach(car => {
-							carsList.innerHTML += `
-								<div class="col-lg-3 col-md-4 col-sm-6">
-									<div class="single-featured-cars">
-										<div class="featured-img-box">
-											<div class="featured-cars-img">
-												<img src="${car.image_url}" alt="car">
-											</div>
-										</div>
-										<div class="featured-cars-txt">
-											<h2><a href="#">${car.model}</a></h2>
-											<h3>$${car.price}</h3>
-										</div>
-									</div>
-								</div>`;
-						});
-					})
-					.catch(error => console.error('Error loading cars:', error));
-			}
-	
-			// 페이지 로드 시 전체 차량 목록을 불러옵니다.
-			document.addEventListener("DOMContentLoaded", () => loadCars());
-		</script>
-
-		<section>
-			<div class="container">
-				<div class="row" style="margin-top: 200px;">
-					<div class="col-md-11">
-						<div class="model-search-content">
-							<div class="row">
-								<div class="col-md-offset-1 col-md-10 col-sm-12">								
-									<div class="single-model-search">
-										<h2>차량 대여</h2>									
-										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
-									</div>														
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">										
-											<button class="welcome-btn model-search-btn" onclick="RentFunction()">
-												대여
-											</button>
-										</div>
-									</div>									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
 		<!--contact start-->
 		<footer id="contact"  class="contact">
 			<div class="container">
@@ -223,15 +148,14 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">
 									<p>문의: do0108081@gmail.com</p>						
 								</div>
 							</div>
-						</div>
-							
+						</div>							
 					</div>
 				</div>
 			</div><!--/.container-->
@@ -268,46 +192,51 @@
 
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
-        
-		<script>
-			function logoutFunction() {
-				window.location.href = `fc_logout.jsp`;
-			}
 
-			function RentFunction() {
-				const carNumber = document.getElementById("carNumber").value;
-				
-				if (!carNumber) {
-					alert("차량 번호를 다시 입력하세요.");
-					return;
-				}
-		
+		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
+		<script>			
+			function loginFunction() {
+				const adminId = document.getElementById("Admin_id").value.trim(); // .trim() 수정
+    			const adminPassword = document.getElementById("Admin_pw").value.trim();
+
+    			// 입력값 확인
+    			if (!adminId || !adminPassword) {
+        			alert("ID와 PASSWORD를 모두 입력해주세요.");
+        			return false; // 폼 제출 중단
+    			}
+
+    			return true; // 폼 제출 진행
+
+				/*
 				// 예시: 서버로 데이터를 보내는 POST 요청
 				fetch("your_login_api_endpoint", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({id: carNumber})
+					body: JSON.stringify({ id: userId, password: userPassword })
 				})
 				.then(response => response.json())
 				.then(data => {
 					if (data.success) {
-						alert("해당 차량을 대여 신청이 완료되었습니다.");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "User.html";
+						alert("로그인 성공!");
+						// 로그인 성공 시 이동할 페이지 설정
+						window.location.href = "dashboard.html";
 					} else {
-						alert("대여 실패: " + data.message);
+						alert("로그인 실패: " + data.message);
 					}
 				})
 				.catch(error => console.error("Error:", error));
+				*/
 			}
 		
-			// HTML 페이지로 이동
+			// JSP 페이지로 이동
 			function navigateTo(page) {
-				window.location.href = `${page}.html`;
+				window.location.href = `${page}.jsp`;
 			}
 		</script>
+		
+        
     </body>
 	
 </html>

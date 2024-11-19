@@ -44,7 +44,7 @@
             session.setAttribute("User_name", User_name);
 
             // 로그인 성공 시 페이지 이동
-            response.sendRedirect("User_rent.html"); // 사용자 대여 페이지로 이동
+            response.sendRedirect("User_rent.jsp"); // 사용자 대여 페이지로 이동
 
         } else {  // 로그인 실패
             response.sendRedirect("fc_login_fail.jsp"); // 실패 페이지로 이동
@@ -52,7 +52,7 @@
 		
 	} catch(Exception e){
 		e.printStackTrace();
-		response.sendRedirect("User_login.html?error=exception");
+		response.sendRedirect("User_login.jsp?error=exception");
 	} finally{
 		try{
 			if(rs != null) rs.close();

@@ -1,3 +1,4 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -14,7 +15,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Hanseo Car rent_user_login</title>
+        <title>Hanseo Car rent_user_sign up</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -78,7 +79,7 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
@@ -110,8 +111,8 @@
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 
-									<form id = "login_Form" action="fc_login_ok.jsp" method="post" onsubmit="return loginFunction()">
-										<div style="text-align:center">USER LOGIN</div>
+									<form id = "signup_Form" action="fc_signup_ok.jsp" method="post" onsubmit="return signupFunction()">
+										<div style="text-align:center">SIGN UP</div>
 										<div class="single-model-search">
 											<h2>ID</h2>									
 											<input type="text" id="User_id" name="User_id" placeholder="ID를 입력하세요" required>														
@@ -119,18 +120,22 @@
 										<div class="single-model-search">
 											<h2>PASSWORD</h2>									
 											<input type="password" id="User_pw" name="User_pw" placeholder="PASSWORD 입력하세요" required>											
-										</div>								
+										</div>
+										<div class="single-model-search">
+											<h2>NAME</h2>									
+											<input type="text" id="User_name" name="User_name" placeholder="이름을 입력하세요" required>														
+										</div>														
 										<div class="col-md-11 col-sm-12">
 											<div class="single-model-search text-center">
 												<button type="submit" class="welcome-btn model-search-btn">
-													Login
+													Create
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
+													user-Login
 												</button>
 												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
-													admin-login
+													admin-Login
 												</button>
-												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_signup')">
-													Sign up
-												</button>											
 											</div>
 										</div>
 									</form>
@@ -153,7 +158,7 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">
@@ -201,44 +206,49 @@
         
 		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
 		<script>			
-			function loginFunction() {
+			function signupFunction() {
 
 				const userId = document.getElementById("User_id").value.trim();
 				const userPassword = document.getElementById("User_pw").value.trim();
-				
-				if (!userId || !userPassword) {
+				const userName = document.getElementById("User_name").value.trim();
+
+				if (!userId || !userPassword || !userName) {
 					alert("모두 입력해주세요");
 					return false;
 				}
-
-				return true;
 				
+				return true;
+
 				/*
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
+				//  POST 요청으로 서버로 회원가입 정보를 전송
+				fetch("your_login_api_endpoint", { // 회원가입 API의 엔드포인트 URL로 교체
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({ id: userId, password: userPassword })
+					body: JSON.stringify({ 
+						id: userId,
+						password: userPassword,
+						name: userName						
+					 })
 				})
 				.then(response => response.json())
 				.then(data => {
 					if (data.success) {
-						alert("로그인 성공!");
-						// 로그인 성공 시 이동할 페이지 설정
-						window.location.href = "dashboard.html";
+						alert("회원가입 성공!");
+						// 회원가입 성공 시 이동할 페이지 설정
+						window.location.href = "User_login.jsp";
 					} else {
-						alert("로그인 실패: " + data.message);
+						alert("회원가입 실패: " + data.message);
 					}
 				})
 				.catch(error => console.error("Error:", error));
-				*/
+				*/	
 			}
 		
-			// HTML 페이지로 이동
+			// JSP 페이지로 이동
 			function navigateTo(page) {
-				window.location.href = `${page}.html`;
+				window.location.href = `${page}.jsp`;
 			}
 		</script>
     </body>

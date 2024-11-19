@@ -1,3 +1,4 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -75,7 +76,7 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
@@ -147,7 +148,7 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">
@@ -229,9 +230,9 @@
 				*/
 			}
 		
-			// HTML 페이지로 이동
+			// JSP 페이지로 이동
 			function navigateTo(page) {
-				window.location.href = `${page}.html`;
+				window.location.href = `${page}.jsp`;
 			}
 		</script>
 		

@@ -1,3 +1,4 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -79,25 +80,25 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
-				            <!-- End Header Navigation -->	
+				            <!-- End Header Navigation -->
 							 <!-- Collect the nav links, forms, and other content for toggling -->
 							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-									<li class="scroll"><a href="Admin_rent.html" onclick="navigateTo('Admin_rent')">Car rent</a></li>
-									<li class="scroll"><a href="Admin_management.html" onclick="navigateTo('Admin_management')">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.html" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="Admin_management.jsp" onclick="navigateTo('Admin_management')">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
 							</div>
 							<script>
 								function navigateTo(page) {
     								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
-   									window.location.href = `${page}.html`;
+   									window.location.href = `${page}.jsp`;
 								}
-							</script>					            
+							</script>						            
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -121,49 +122,105 @@
 		<section id="featured-cars" class="featured-cars">
 			<div class="container">
 				<div class="section-header">
-					<p>비용 정산</p>
-					<h2>Cost settlement</h2>
+					<p>List of <span>Registered</span> Users</p>
+					<h2>User Information</h2>
+				</div>	
+				<div class="row">
+					<!-- Left Column: Users waiting to rent a car -->
+					<div class="col-md-6">
+						<h3>Users Waiting to Rent</h3>
+						<div id="waiting-users-list" class="featured-users-content">
+							<!-- 차량 대기 중 사용자 목록이 여기에 추가됩니다. -->
+						</div>
+					</div>
+		
+					<!-- Right Column: Users currently renting a car -->
+					<div class="col-md-6">
+						<h3>Users Currently Renting</h3>
+						<div id="renting-users-list" class="featured-users-content">
+							<!-- 차량을 빌린 사용자 목록이 여기에 추가됩니다. -->
+						</div>
+					</div>
 				</div>				
-				<div class="col-md-6">
-					<div id="waiting-users-list" class="featured-users-content">
-					<!-- 비용 정산 목록이 여기에 추가됩니다. -->
-				    </div>
-				</div>							
 			</div>
 		</section>
+		<style>
+			.featured-cars .col-md-6 {
+				float: left;
+				padding: 30px;
+			}
+			.featured-cars .row {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			#waiting-users-list, #renting-users-list {
+				margin-top: 30px;
+			}
+		</style>
 		<script>
 			// 서버에서 사용자 목록을 가져와 각 섹션에 추가하는 함수
-			function loadCost() {
-				fetch('/get_cars')
+			function loadUsers() {
+				fetch('/get_users')
 					.then(response => response.json())
-					.then(cars => {
-						const carsList = document.getElementById('cost');
-						carsList.innerHTML = ''; // 초기화
-						cars.forEach(car => {
-							carsList.innerHTML += `
-								<div class="col-lg-3 col-md-4 col-sm-6">
-									<div class="single-featured-cars">
-										<div class="featured-img-box">
-											<div class="featured-cars-img">
-												<img src="${car.image_url}" alt="car">
-											</div>
-										</div>
-										<div class="featured-cars-txt">
-											<h2><a href="#">${car.model}</a></h2>
-											<h3>$${car.price}</h3>
-										</div>
+					.then(users => {
+						const waitingList = document.getElementById('waiting-users-list');
+						const rentingList = document.getElementById('renting-users-list');
+						
+						waitingList.innerHTML = ''; // 초기화
+						rentingList.innerHTML = ''; // 초기화
+		
+						users.forEach(user => {
+							const userHTML = `
+								<div class="single-featured-users">
+									<div class="featured-user-txt">
+										<h2><a href="#">${user.name}</a></h2>
+										<p>ID: ${user.id}</p>
+										<p>Email: ${user.email}</p>
 									</div>
 								</div>`;
+							
+							if (user.status === 'waiting') {
+								waitingList.innerHTML += userHTML;
+							} else if (user.status === 'renting') {
+								rentingList.innerHTML += userHTML;
+							}
 						});
 					})
-					.catch(error => console.error('Error loading cars:', error));
+					.catch(error => console.error('Error loading users:', error));
 			}
-			//페이지 로드시 비용 보여줌.
-			document.addEventListener("DOMContentLoaded", loadCost);
+			//페이지 로드시 사용자 목록 보여줌.
+			document.addEventListener("DOMContentLoaded", loadUsers);
 		</script>
 
 		<!--car-rent-start-->
-		
+		<section>
+			<div class="container">
+				<div class="row" style="margin-top: 200px;">
+					<div class="col-md-11">
+						<div class="model-search-content">
+							<div class="row">
+								<div class="col-md-offset-1 col-md-10 col-sm-12">								
+									<div class="single-model-search">
+										<h2>USER ID</h2>									
+										<input type="text" id="userId" placeholder="아이디를 입력하세요" required>														
+									</div>														
+									<div class="col-md-11 col-sm-12">
+										<div class="single-model-search text-center">										
+											<button class="welcome-btn model-search-btn" onclick="AssignFunction1()">
+												승인
+											</button>
+											<button class="welcome-btn model-search-btn" onclick="AssignFunction2()">
+												반납
+											</button>
+										</div>
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 		<!--car-rent-end-->
 		
 		<!--contact start-->
@@ -174,7 +231,7 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">
@@ -246,13 +303,14 @@
 					if (data.success) {
 						alert("차량 삭제 성공!");
 						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.html";
+						window.location.href = "Admin_rent.jsp";
 					} else {
 						alert("차량 삭제 실패: " + data.message);
 					}
 				})
 				.catch(error => console.error("Error:", error));
 			}
+
 			function AssignFunction2() { //반납 버튼
 				const userId = document.getElementById("userId").value;
 				
@@ -274,7 +332,7 @@
 					if (data.success) {
 						alert("차량 반납 성공!");
 						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.html";
+						window.location.href = "Admin_rent.jsp";
 					} else {
 						alert("차량 반납 실패: " + data.message);
 					}
@@ -282,9 +340,9 @@
 				.catch(error => console.error("Error:", error));
 			}
 		
-			// HTML 페이지로 이동
+			// JSP 페이지로 이동
 			function navigateTo(page) {
-				window.location.href = `${page}.html`;
+				window.location.href = `${page}.jsp`;
 			}
 		</script>
     </body>

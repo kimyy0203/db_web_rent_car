@@ -45,7 +45,7 @@
             session.setAttribute("Admin_name", Admin_name);
 
             // 로그인 성공 시 페이지 이동
-            response.sendRedirect("Admin_rent.html"); // 관리자 대여 페이지로 이동
+            response.sendRedirect("Admin_rent.jsp"); // 관리자 대여 페이지로 이동
 
         } else {  // 로그인 실패
             response.sendRedirect("fc_login_fail_admin.jsp"); // 실패 페이지로 이동
@@ -53,7 +53,7 @@
 		
 	} catch(Exception e){
 		e.printStackTrace();
-		response.sendRedirect("Admin_login.html?error=exception");
+		response.sendRedirect("Admin_login.jsp?error=exception");
 	} finally{
 		try{
 			if(rs != null) rs.close();

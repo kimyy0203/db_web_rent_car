@@ -1,8 +1,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!doctype html>
 <html class="no-js" lang="en">
-<head>
-<!-- meta data -->
+
+    <head>
+        <!-- meta data -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +15,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Sign up success</title>
+        <title>Hanseo Car rent_user_login</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -46,10 +47,23 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-</head>
-<body>
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		
+        <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-	<!--welcome-hero start -->
+    </head>
+	
+	<body>
+		<!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+	
+		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
 			<!-- top-area Start -->
@@ -61,10 +75,20 @@
 				        <div class="container">
 
 				            <!-- Start Header Navigation -->
-				            <div class="navbar-header">				                
+				            <div class="navbar-header">
+				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+				                    <i class="fa fa-bars"></i>
+				                </button>
 				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
+
 				            </div><!--/.navbar-header-->
-				            <!-- End Header Navigation -->				            
+				            <!-- End Header Navigation -->
+
+				            <!-- Collect the nav links, forms, and other content for toggling -->
+				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">				                    
+				                </ul><!--/.nav -->
+				            </div><!-- /.navbar-collapse -->
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -76,20 +100,42 @@
 
 			<div class="container">
 				<div class="welcome-hero-txt">
-					<h2>sign up success</h2>					
+					<h2>we can service for you</h2>					
 				</div>
 			</div>
 
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div class="single-model-search">
-											<h2>회원가입을 축하합니다!  <로그인하기> 버튼을 눌러주세요.</h2>										
-											<a href="User_login.jsp">로그인하기</a>				
-									</div>									
+
+									<form id = "login_Form" action="fc_login_ok.jsp" method="post" onsubmit="return loginFunction()">
+										<div style="text-align:center">USER LOGIN</div>
+										<div class="single-model-search">
+											<h2>ID</h2>									
+											<input type="text" id="User_id" name="User_id" placeholder="ID를 입력하세요" required>														
+										</div>
+										<div class="single-model-search">
+											<h2>PASSWORD</h2>									
+											<input type="password" id="User_pw" name="User_pw" placeholder="PASSWORD 입력하세요" required>											
+										</div>								
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">
+												<button type="submit" class="welcome-btn model-search-btn">
+													Login
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
+													admin-login
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_signup')">
+													Sign up
+												</button>											
+											</div>
+										</div>
+									</form>
+
 								</div>
 							</div>
 						</div>
@@ -154,5 +200,48 @@
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
         
+		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
+		<script>			
+			function loginFunction() {
+
+				const userId = document.getElementById("User_id").value.trim();
+				const userPassword = document.getElementById("User_pw").value.trim();
+				
+				if (!userId || !userPassword) {
+					alert("모두 입력해주세요");
+					return false;
+				}
+
+				return true;
+				
+				/*
+				// 예시: 서버로 데이터를 보내는 POST 요청
+				fetch("your_login_api_endpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({ id: userId, password: userPassword })
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("로그인 성공!");
+						// 로그인 성공 시 이동할 페이지 설정
+						window.location.href = "dashboard.html";
+					} else {
+						alert("로그인 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+				*/
+			}
+		
+			// JSP 페이지로 이동
+			function navigateTo(page) {
+				window.location.href = `${page}.jsp`;
+			}
+		</script>
     </body>
+	
 </html>

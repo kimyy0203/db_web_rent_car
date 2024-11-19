@@ -1,3 +1,4 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -14,7 +15,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Hanseo Car rent_user_main</title>
+        <title>Hanseo Car rent_user_sign up</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -78,18 +79,14 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
 
 				            <!-- Collect the nav links, forms, and other content for toggling -->
 				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-				                    <li class=" scroll active"><a href="#home">홈</a></li>
-				                    <li class="scroll"><a href="#featured-cars">차량 종류</a></li>
-				                    <li class="scroll"><a href="#new-cars">차량 대여</a></li>
-									<li class="scroll"><a href="#new-cars">로그아웃</a></li>
+				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">				                    
 				                </ul><!--/.nav -->
 				            </div><!-- /.navbar-collapse -->
 				        </div><!--/.container-->
@@ -109,32 +106,40 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div class="single-model-search">
-											<h2>Select Model</h2>										
-										<div class="model-select-icon">
-											<select class="form-control">
-											  	<option value="default">차량 모델</option><!-- /.option-->
-											  	<option value="소형차">소형차</option><!-- /.option-->
-												<option value="세단">세단</option><!-- /.option-->
-											  	<option value="SUV">SUV</option><!-- /.option-->
-											  	<option value="벤">벤</option><!-- /.option-->
-												<option value="기타">기타</option><!-- /.option-->
-											</select><!-- /.select-->
-										</div><!-- /.model-select-icon -->					
-									</div>
-									
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">
-											<button class="welcome-btn model-search-btn" onclick="window.location.href='#'">
-												search
-											</button>
+
+									<form id = "signup_Form" action="fc_signup_ok.jsp" method="post" onsubmit="return signupFunction()">
+										<div style="text-align:center">SIGN UP</div>
+										<div class="single-model-search">
+											<h2>ID</h2>									
+											<input type="text" id="User_id" name="User_id" placeholder="ID를 입력하세요" required>														
 										</div>
-									</div>
-									
+										<div class="single-model-search">
+											<h2>PASSWORD</h2>									
+											<input type="password" id="User_pw" name="User_pw" placeholder="PASSWORD 입력하세요" required>											
+										</div>
+										<div class="single-model-search">
+											<h2>NAME</h2>									
+											<input type="text" id="User_name" name="User_name" placeholder="이름을 입력하세요" required>														
+										</div>														
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">
+												<button type="submit" class="welcome-btn model-search-btn">
+													Create
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
+													user-Login
+												</button>
+												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('Admin_login')">
+													admin-Login
+												</button>
+											</div>
+										</div>
+									</form>
+
 								</div>
 							</div>
 						</div>
@@ -145,129 +150,6 @@
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
 
-		<!--featured-cars start -->
-		<section id="featured-cars" class="featured-cars">
-			<div class="container">
-				<div class="section-header">
-					<p>Various <span>types of</span> cars</p>
-					<h2>Type of car</h2>
-				</div><!--/.section-header-->
-				<div class="featured-cars-content">
-					<div class="row">
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc1.png" alt="cars">
-									</div>									
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">BMW 6-series gran coupe</a></h2>
-									<h3>$89,395</h3>									
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc2.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">chevrolet camaro <span>wmv20</span></a></h2>
-									<h3>$66,575</h3>									
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc3.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">lamborghini <span>v520</span></a></h2>
-									<h3>$125,250</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc4.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">audi <span> a3</span> sedan</a></h2>
-									<h3>$95,500</h3>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc4.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">infiniti <span>z5</span></a></h2>
-									<h3>$36,850</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc5.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">porsche <span>718</span> cayman</a></h2>
-									<h3>$48,500</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc7.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#"><span>bmw 8-</span>series coupe</a></h2>
-									<h3>$56,000</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc8.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">BMW <span> x</span>series-6</a></h2>
-									<h3>$75,800</h3>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div><!--/.container-->
-
-		</section><!--/.featured-cars-->
-		<!--featured-cars end -->
-
-
 		<!--contact start-->
 		<footer id="contact"  class="contact">
 			<div class="container">
@@ -276,7 +158,7 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">
@@ -322,6 +204,53 @@
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
         
+		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
+		<script>			
+			function signupFunction() {
+
+				const userId = document.getElementById("User_id").value.trim();
+				const userPassword = document.getElementById("User_pw").value.trim();
+				const userName = document.getElementById("User_name").value.trim();
+
+				if (!userId || !userPassword || !userName) {
+					alert("모두 입력해주세요");
+					return false;
+				}
+				
+				return true;
+
+				/*
+				//  POST 요청으로 서버로 회원가입 정보를 전송
+				fetch("your_login_api_endpoint", { // 회원가입 API의 엔드포인트 URL로 교체
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({ 
+						id: userId,
+						password: userPassword,
+						name: userName						
+					 })
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("회원가입 성공!");
+						// 회원가입 성공 시 이동할 페이지 설정
+						window.location.href = "User_login.jsp";
+					} else {
+						alert("회원가입 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+				*/	
+			}
+		
+			// JSP 페이지로 이동
+			function navigateTo(page) {
+				window.location.href = `${page}.jsp`;
+			}
+		</script>
     </body>
 	
 </html>

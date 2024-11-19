@@ -62,7 +62,7 @@
 
 				            <!-- Start Header Navigation -->
 				            <div class="navbar-header">				                
-				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->				            
 				        </div><!--/.container-->
@@ -88,7 +88,7 @@
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 									<div class="single-model-search">
 											<h2>회원가입에 실패했습니다.  <다시 가입하기> 버튼을 눌러주세요.</h2>										
-											<a href="User_signup.html">다시 가입하기</a>				
+											<a href="User_signup.jsp">다시 가입하기</a>				
 									</div>									
 								</div>
 							</div>
@@ -108,7 +108,7 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="single-footer-widget">
 								<div class="footer-logo">
-									<a href="index.html">hanseo car rent</a>
+									<a href="index.jsp">hanseo car rent</a>
 								</div>
 								
 								<div class="footer-contact">

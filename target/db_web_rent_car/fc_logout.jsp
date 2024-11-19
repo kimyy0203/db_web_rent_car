@@ -17,5 +17,5 @@
 
     session.invalidate(); // 세션 무효화
 
-	response.sendRedirect("User_login.html"); // 사용자 로그인 화면으로 다시 이동
+	response.sendRedirect("User_login.jsp"); // 사용자 로그인 화면으로 다시 이동
 %>
