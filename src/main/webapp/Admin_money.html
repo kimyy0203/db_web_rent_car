@@ -82,18 +82,22 @@
 				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
 
 				            </div><!--/.navbar-header-->
-				            <!-- End Header Navigation -->
-
-				            <!-- Collect the nav links, forms, and other content for toggling -->
-				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-				                    <li class="scroll"><a href="Admin_rent.html">Car rent</a></li>
-									<li class="scroll"><a href="Admin_management.html">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.html">Cost</a></li>
-									<li class="scroll"><a href="Admin_login.html">Log out</a></li>
-									<!-- log out 부분 다시 생각해 봐야함.-->
-				                </ul><!--/.nav -->
-				            </div><!-- /.navbar-collapse -->
+				            <!-- End Header Navigation -->	
+							 <!-- Collect the nav links, forms, and other content for toggling -->
+							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+									<li class="scroll"><a href="Admin_rent.html" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="Admin_management.html" onclick="navigateTo('Admin_management')">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.html" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a href="Admin_login.html" onclick="navigateTo('Admin_login')">Log out</a></li>
+								</ul>
+							</div>
+							<script>
+								function navigateTo(page) {
+    								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
+   									window.location.href = `${page}.html`;
+								}
+							</script>					            
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
