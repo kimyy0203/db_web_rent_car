@@ -81,14 +81,12 @@
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
-
-				            <!-- Collect the nav links, forms, and other content for toggling -->
-				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-				                    <li class="scroll"><a href="Admin_rent.html">Car rent</a></li>								
-									<li class="scroll"><a href="fc_logout.jsp">Log out</a></li>		
-				                </ul><!--/.nav -->
-				            </div><!-- /.navbar-collapse -->
+							 <!-- Collect the nav links, forms, and other content for toggling -->
+							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">									
+									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
+								</ul>
+							</div>		
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -272,6 +270,10 @@
         <script src="assets/js/custom.js"></script>
         
 		<script>
+			function logoutFunction() {
+				window.location.href = `fc_logout.jsp`;
+			}
+
 			function RentFunction() {
 				const carNumber = document.getElementById("carNumber").value;
 				

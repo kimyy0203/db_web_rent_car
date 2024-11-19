@@ -89,7 +89,7 @@
 									<li class="scroll"><a href="Admin_rent.html" onclick="navigateTo('Admin_rent')">Car rent</a></li>
 									<li class="scroll"><a href="Admin_management.html" onclick="navigateTo('Admin_management')">Car management</a></li>
 									<li class="scroll"><a href="Admin_money.html" onclick="navigateTo('Admin_money')">Cost</a></li>
-									<li class="scroll"><a href="Admin_login.html" onclick="navigateTo('Admin_login')">Log out</a></li>
+									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
 							</div>
 							<script>
@@ -286,7 +286,11 @@
         <script src="assets/js/custom.js"></script>
         
 		<!-- Create 버튼 클릭 시 차량 고유번호 값을 가져와서 처리하는 함수 -->
-		 <script>
+		<script>
+		function logoutFunction() { // 로그아웃 버튼
+				window.location.href = `fc_logout.jsp`;
+			}
+
 		function CreateFunction() {
 			const carNumber = document.getElementById("carNumber").value;
 			const carModel = document.querySelector("#car-model").value;

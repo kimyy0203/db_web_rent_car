@@ -83,17 +83,21 @@
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
-
-				            <!-- Collect the nav links, forms, and other content for toggling -->
-				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-				                    <li class="scroll"><a href="Admin_rent.html">Car rent</a></li>
-									<li class="scroll"><a href="Admin_management.html">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.html">Cost</a></li>
-									<li class="scroll"><a href="Admin_login.html">Log out</a></li>
-									<!-- log out 부분 다시 생각해 봐야함.-->
-				                </ul><!--/.nav -->
-				            </div><!-- /.navbar-collapse -->
+							 <!-- Collect the nav links, forms, and other content for toggling -->
+							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+									<li class="scroll"><a href="Admin_rent.html" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="Admin_management.html" onclick="navigateTo('Admin_management')">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.html" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
+								</ul>
+							</div>
+							<script>
+								function navigateTo(page) {
+    								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
+   									window.location.href = `${page}.html`;
+								}
+							</script>						            
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -273,6 +277,10 @@
         <script src="assets/js/custom.js"></script>
         
 		<script>
+			function logoutFunction() { // 로그아웃 버튼
+				window.location.href = `fc_logout.jsp`;
+			}
+
 			function AssignFunction1() { //승인버튼
 				const userId = document.getElementById("userId").value;
 				
@@ -301,6 +309,7 @@
 				})
 				.catch(error => console.error("Error:", error));
 			}
+
 			function AssignFunction2() { //반납 버튼
 				const userId = document.getElementById("userId").value;
 				

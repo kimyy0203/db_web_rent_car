@@ -1,8 +1,8 @@
-<!doctype html>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
-
-    <head>
-        <!-- meta data -->
+<head>
+<!-- meta data -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Hanseo Car rent_admin_login</title>
+        <title>login fail</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -46,20 +46,10 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+</head>
+<body>
 
-    </head>
-	
-	<body>
-	
-		<!--welcome-hero start -->
+	<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
 			<!-- top-area Start -->
@@ -71,20 +61,10 @@
 				        <div class="container">
 
 				            <!-- Start Header Navigation -->
-				            <div class="navbar-header">
-				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-				                    <i class="fa fa-bars"></i>
-				                </button>
+				            <div class="navbar-header">				                
 				                <a class="navbar-brand" href="index.html">Hanseo Car rent<span></span></a>
-
 				            </div><!--/.navbar-header-->
-				            <!-- End Header Navigation -->
-
-				            <!-- Collect the nav links, forms, and other content for toggling -->
-				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">				                    
-				                </ul><!--/.nav -->
-				            </div><!-- /.navbar-collapse -->
+				            <!-- End Header Navigation -->				            
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -96,46 +76,27 @@
 
 			<div class="container">
 				<div class="welcome-hero-txt">
-					<h2>we can service for you</h2>					
+					<h2>login fail</h2>					
 				</div>
 			</div>
-			<!-- Admin_login start-->
+
 			<div class="container">
 				<div class="row">
-					<div class="col-md-11">
+					<div class="col-md-12">
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-
-									<form id = "login_admin_Form" action="fc_login_ok_admin.jsp" method="post" onsubmit="return loginFunction()">
-										<div style="text-align:center">ADMIN LOGIN</div>
-										<div class="single-model-search">
-											<h2>ID</h2>									
-											<input type="text" id="Admin_id" name="Admin_id" placeholder="ID를 입력하세요" required>														
-										</div>
-										<div class="single-model-search">
-											<h2>PASSWORD</h2>									
-											<input type="password" id="Admin_pw" name="Admin_pw" placeholder="PASSWORD 입력하세요" required>											
-										</div>								
-										<div class="col-md-11 col-sm-12">
-											<div class="single-model-search text-center">
-												<button type="submit" class="welcome-btn model-search-btn">
-													Login
-												</button>
-												<button type="button" class="welcome-btn model-search-btn" onclick="navigateTo('User_login')">
-													user-login
-												</button>											
-											</div>
-										</div>
-									</form>
-
+									<div class="single-model-search">
+											<h2>로그인에 실패했습니다. 아이디와, 비밀번호 다시 확인해주세요. <다시 로그인하기> 누르세요.</h2>										
+											<a href="Admin_login.html">다시 로그인하기</a>				
+									</div>									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Admin_login end-->
+
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
 
@@ -154,7 +115,8 @@
 									<p>문의: do0108081@gmail.com</p>						
 								</div>
 							</div>
-						</div>							
+						</div>
+							
 					</div>
 				</div>
 			</div><!--/.container-->
@@ -191,51 +153,6 @@
 
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
-
-		<!-- Login 버튼 클릭 시 ID와 PASSWORD 값을 가져와서 처리하는 함수 -->
-		<script>			
-			function loginFunction() {
-				const adminId = document.getElementById("Admin_id").value.trim(); // .trim() 수정
-    			const adminPassword = document.getElementById("Admin_pw").value.trim();
-
-    			// 입력값 확인
-    			if (!adminId || !adminPassword) {
-        			alert("ID와 PASSWORD를 모두 입력해주세요.");
-        			return false; // 폼 제출 중단
-    			}
-
-    			return true; // 폼 제출 진행
-
-				/*
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({ id: userId, password: userPassword })
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("로그인 성공!");
-						// 로그인 성공 시 이동할 페이지 설정
-						window.location.href = "dashboard.html";
-					} else {
-						alert("로그인 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
-				*/
-			}
-		
-			// HTML 페이지로 이동
-			function navigateTo(page) {
-				window.location.href = `${page}.html`;
-			}
-		</script>
-		
         
     </body>
-	
 </html>
