@@ -2,11 +2,24 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
+
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	// String id = (String)session.getAttribute("Admin_id");
-    	// DB 연결에 필요한 변수 선언
-	String jdbcUrl = "jdbc:mysql://localhost:3306/rent_car"; // your_database_name 변경 필요
+	// 관리자 세션 검증
+	/*
+	String Admin_id = (String)session.getAttribute("Admin_id");
+	if (adminId == null) {
+    response.sendRedirect("Admin_login.jsp");
+	}
+	*/
+
+    // DB 연결에 필요한 변수 선언
+	String jdbcUrl = "jdbc:mysql://localhost:3306/rent_car";
 	String dbId = "root"; // MySQL 사용자명
 	String dbPwd = "0808"; // MySQL 비밀번호
 	
@@ -30,24 +43,26 @@
 		// SQL 실행
 		rs = pstmt.executeQuery();
 		
-		if (rs.next()) {
-			String Car_id = rs.getString("Car_id");
-			String Car_type = rs.getString("Car_type");
-			String Car_name = rs.getString("Car_name");
-			int Car_cost = rs.getString("Car_cost");
-			
-			// 포워드로 전달하기 위해
-			request.setAttribute("Car_id", Car_id);
-			request.setAttribute("Car_type", Car_type);
-			request.setAttribute("Car_name", Car_name);
-			request.setAttribute("Car_cost", Car_cost);
-			
-			// 포워드 이동
-			request.getRequestDispatcher("Admin_management.jsp").forward(request, response);
-			
-		} else { // 세션이 만료된 경우
-			response.sendRedirect("Admin_login.jsp");
-		}
+		List<Map<String, Object>> carList = new ArrayList<>();
+
+		while (rs.next()) {
+            // 각 행의 데이터를 맵에 저장
+            Map<String, Object> carData = new HashMap<>();
+            carData.put("Car_id", rs.getString("Car_id"));
+            carData.put("Car_type", rs.getString("Car_type"));
+            carData.put("Car_name", rs.getString("Car_name"));
+            carData.put("Car_cost", rs.getInt("Car_cost"));
+
+            // 리스트에 추가
+            carList.add(carData);
+        }
+		
+		// 데이터를 request 객체에 저장
+        request.setAttribute("carList", carList);
+
+        // 다음 JSP로 포워드
+        request.getRequestDispatcher("Admin_management.jsp").forward(request, response);
+
 	} catch(Exception e) {
 		e.printStackTrace();
 		response.sendRedirect("Admin_login.jsp");

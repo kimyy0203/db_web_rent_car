@@ -1,4 +1,14 @@
+<%@page import="java.sql.ResultSet"%>
+
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	// response.sendRedirect("fc_getinfo_car.jsp");
+%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -171,7 +181,43 @@
 					<h2>Type of car</h2>
 				</div>	
 				<div id="cars-list" class = "featured-cars-content">
+					<script>location.href="fc_getinfo_car.jsp"</script>
 					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
+					<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Car ID</th>
+                        <th>Car Type</th>
+                        <th>Car Name</th>
+                        <th>Car Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        // Get the car list from the request
+                        List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
+                        if (carList != null && !carList.isEmpty()) {
+                            for (Map<String, Object> car : carList) {
+                    %>
+                    <tr>
+                        <td><%= car.get("Car_id") %></td>
+                        <td><%= car.get("Car_type") %></td>
+                        <td><%= car.get("Car_name") %></td>
+                        <td><%= car.get("Car_cost") %></td>
+                    </tr>
+                    <%
+                            }
+                        } else {
+                    %>
+                    <tr>
+                        <td colspan="4">No cars available at the moment.</td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </tbody>
+            </table>	
+					<!-- 차량 목록 테이블 출력 끝-->
 				</div>			
 			</div>
 		</section>
