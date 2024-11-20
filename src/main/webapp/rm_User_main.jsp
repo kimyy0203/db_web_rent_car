@@ -1,4 +1,15 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -15,7 +26,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Hanseo Car rent_user_main</title>
+        <title>Hanseo Car rent_admin_management</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -86,13 +97,19 @@
 
 				            <!-- Collect the nav links, forms, and other content for toggling -->
 				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-				                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-				                    <li class=" scroll active"><a href="#home">홈</a></li>
-				                    <li class="scroll"><a href="#featured-cars">차량 종류</a></li>
-				                    <li class="scroll"><a href="#new-cars">차량 대여</a></li>
-									<li class="scroll"><a href="#new-cars">로그아웃</a></li>
-				                </ul><!--/.nav -->
-				            </div><!-- /.navbar-collapse -->
+								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="Admin_management.jsp" onclick="navigateTo('Admin_management')">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
+								</ul>
+							</div>
+							<script>
+								function navigateTo(page) {
+    								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
+   									window.location.href = `${page}.jsp`;
+								}
+							</script>							
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -109,30 +126,43 @@
 			</div>
 
 			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
+				<div class="row" style="margin-bottom: 200px;">
+					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
+									<div style="text-align:center">차량 추가</div>
 									<div class="single-model-search">
-											<h2>Select Model</h2>										
-										<div class="model-select-icon">
-											<select class="form-control">
-											  	<option value="default">차량 모델</option><!-- /.option-->
-											  	<option value="소형차">소형차</option><!-- /.option-->
-												<option value="세단">세단</option><!-- /.option-->
-											  	<option value="SUV">SUV</option><!-- /.option-->
-											  	<option value="벤">벤</option><!-- /.option-->
-												<option value="기타">기타</option><!-- /.option-->
-											</select><!-- /.select-->
-										</div><!-- /.model-select-icon -->					
+										<h2>차량 번호</h2>									
+										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
 									</div>
-									
+									<div class="single-model-search">
+										<h2>차량 모델</h2>										
+									<div class="model-select-icon">
+										<select class="form-control">
+											  <option value="default">차량 모델</option><!-- /.option-->
+											  <option value="소형차">소형차</option><!-- /.option-->
+											<option value="세단">세단</option><!-- /.option-->
+											  <option value="SUV">SUV</option><!-- /.option-->
+											  <option value="벤">벤</option><!-- /.option-->
+											<option value="기타">기타</option><!-- /.option-->
+										</select><!-- /.select-->
+									</div><!-- /.model-select-icon -->					
+								    </div>
+									<div class="single-model-search">
+										<h2>가격</h2>									
+										<input type="text" id="carPrice" placeholder="가격을 입력하세요" required>														
+									</div>
+									<div class="single-model-search">
+										<h2>차량 이름</h2>									
+										<input type="text" id="carName" placeholder="차량 이름을 입력하세요" required>														
+									</div>
+												
 									<div class="col-md-11 col-sm-12">
 										<div class="single-model-search text-center">
-											<button class="welcome-btn model-search-btn" onclick="window.location.href='#'">
-												search
-											</button>
+											<button class="welcome-btn model-search-btn" onclick="CreateFunction()">
+												Create
+											</button>											
 										</div>
 									</div>
 									
@@ -142,133 +172,120 @@
 					</div>
 				</div>
 			</div>
-
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
 
-		<!--featured-cars start -->
 		<section id="featured-cars" class="featured-cars">
+    <div class="container">
+        <div class="section-header">
+            <p>Various <span>types of</span> cars</p>
+            <h2>Type of car</h2>
+        </div>
+        <div id="cars-list" class="featured-cars-content">
+            <!-- 자동차 정보 테이블 -->
+            <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Car ID</th>
+                        <th>Car Type</th>
+                        <th>Car Name</th>
+                        <th>Car Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                        Connection conn = null;
+                        PreparedStatement pstmt = null;
+                        ResultSet rs = null;
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rent_car", "root", "0808");
+                            String sql = "SELECT * FROM car";
+                            pstmt = conn.prepareStatement(sql);
+                            rs = pstmt.executeQuery();
+
+                            while (rs.next()) {
+                    %>
+                    <tr>
+                        <td><%= rs.getInt("Car_id") %></td>
+                        <td><%= rs.getString("Car_type") %></td>
+                        <td><%= rs.getString("Car_name") %></td>
+                        <td><%= rs.getInt("Car_cost") %></td>
+                    </tr>
+                    <% 
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (rs != null) rs.close();
+                            if (pstmt != null) pstmt.close();
+                            if (conn != null) conn.close();
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+		<script>
+			// AJAX를 통해 서버에서 차량 목록을 가져와 추가하는 함수
+			function loadCars() {
+				fetch('/get_cars')
+					.then(response => response.json())
+					.then(cars => {
+						const carsList = document.getElementById('cars-list');
+						carsList.innerHTML = ''; // 초기화
+						cars.forEach(car => {
+							carsList.innerHTML += `
+								<div class="col-lg-3 col-md-4 col-sm-6">
+									<div class="single-featured-cars">
+										<div class="featured-img-box">
+											<div class="featured-cars-img">
+												<img src="${car.image_url}" alt="car">
+											</div>
+										</div>
+										<div class="featured-cars-txt">
+											<h2><a href="#">${car.model}</a></h2>
+											<h3>$${car.price}</h3>
+										</div>
+									</div>
+								</div>`;
+						});
+					})
+					.catch(error => console.error('Error loading cars:', error));
+			}
+		
+			// 페이지 로드 시 차량 목록을 불러옵니다.
+			document.addEventListener("DOMContentLoaded", loadCars);
+		</script>
+
+		<section>
 			<div class="container">
-				<div class="section-header">
-					<p>Various <span>types of</span> cars</p>
-					<h2>Type of car</h2>
-				</div><!--/.section-header-->
-				<div class="featured-cars-content">
-					<div class="row">
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc1.png" alt="cars">
+				<div class="row" style="margin-top: 200px;">
+					<div class="col-md-11">
+						<div class="model-search-content">
+							<div class="row">
+								<div class="col-md-offset-1 col-md-10 col-sm-12">								
+									<div class="single-model-search">
+										<h2>차량 삭제</h2>									
+										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
+									</div>														
+									<div class="col-md-11 col-sm-12">
+										<div class="single-model-search text-center">										
+											<button class="welcome-btn model-search-btn" onclick="DeleteFunction()">
+												Delete
+											</button>
+										</div>
 									</div>									
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">BMW 6-series gran coupe</a></h2>
-									<h3>$89,395</h3>									
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc2.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">chevrolet camaro <span>wmv20</span></a></h2>
-									<h3>$66,575</h3>									
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc3.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">lamborghini <span>v520</span></a></h2>
-									<h3>$125,250</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc4.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">audi <span> a3</span> sedan</a></h2>
-									<h3>$95,500</h3>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc4.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">infiniti <span>z5</span></a></h2>
-									<h3>$36,850</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc5.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">porsche <span>718</span> cayman</a></h2>
-									<h3>$48,500</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc7.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#"><span>bmw 8-</span>series coupe</a></h2>
-									<h3>$56,000</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-6">
-							<div class="single-featured-cars">
-								<div class="featured-img-box">
-									<div class="featured-cars-img">
-										<img src="assets/images/featured-cars/fc8.png" alt="cars">
-									</div>
-								</div>
-								<div class="featured-cars-txt">
-									<h2><a href="#">BMW <span> x</span>series-6</a></h2>
-									<h3>$75,800</h3>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div><!--/.container-->
-
-		</section><!--/.featured-cars-->
-		<!--featured-cars end -->
-
-
+			</div>
+		</section>
 		<!--contact start-->
 		<footer id="contact"  class="contact">
 			<div class="container">
@@ -323,6 +340,83 @@
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
         
+		<!-- Create 버튼 클릭 시 차량 고유번호 값을 가져와서 처리하는 함수 -->
+		<script>
+		function logoutFunction() { // 로그아웃 버튼
+				window.location.href = `fc_logout.jsp`;
+			}
+
+		function CreateFunction() {
+			const carNumber = document.getElementById("carNumber").value;
+			const carModel = document.querySelector("#car-model").value;
+			const carPrice = document.getElementById("carPrice").value;
+			const carName = document.getElementById("carName").value;
+	
+			if (!carNumber || carModel === "default" || !carPrice || !carName) {
+				alert("모두 입력해주세요.");
+				return;
+			}
+	
+			// 차량 생성 요청
+			fetch("/create_car", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					car_number: carNumber,
+					model: carModel,
+					price: carPrice,
+					car_Name: carName
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert("차량 추가 성공!");
+					loadCars(); // 차량 목록 새로고침
+				} else {
+					alert("차량 추가 실패: " + data.message);
+				}
+			})
+			.catch(error => console.error("Error:", error));
+		}
+		</script>
+		<script>
+			function DeleteFunction() {
+				const carNumber = document.getElementById("carNumber").value;
+				
+				if (!carNumber) {
+					alert("차량 번호를 다시 입력하세요.");
+					return;
+				}
+		
+				// 예시: 서버로 데이터를 보내는 POST 요청
+				fetch("your_login_api_endpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({id: carNumber})
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("차량 삭제 성공!");
+						// 차량 삭제 성공 시 이동할 페이지 설정
+						window.location.href = "Admin_management.jsp";
+					} else {
+						alert("차량 삭제 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+			}
+		
+			// JSP 페이지로 이동
+			function navigateTo(page) {
+				window.location.href = `${page}.jsp`;
+			}
+		</script>
     </body>
 	
 </html>

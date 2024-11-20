@@ -11,12 +11,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 관리자 세션 검증
-	/*
+	
 	String Admin_id = (String)session.getAttribute("Admin_id");
-	if (adminId == null) {
+	if (Admin_id == null) {
     response.sendRedirect("Admin_login.jsp");
 	}
-	*/
+	
 
     // DB 연결에 필요한 변수 선언
 	String jdbcUrl = "jdbc:mysql://localhost:3306/rent_car";
