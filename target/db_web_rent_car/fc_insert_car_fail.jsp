@@ -14,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Sign up fail</title>
+        <title>Insert fail</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -62,7 +62,7 @@
 
 				            <!-- Start Header Navigation -->
 				            <div class="navbar-header">				                
-				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
+				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent</a>
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->				            
 				        </div><!--/.container-->
@@ -76,7 +76,7 @@
 
 			<div class="container">
 				<div class="welcome-hero-txt">
-					<h2>sign up fail</h2>					
+					<h2>Insert fail</h2>					
 				</div>
 			</div>
 
