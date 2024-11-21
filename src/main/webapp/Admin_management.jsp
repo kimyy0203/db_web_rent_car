@@ -264,18 +264,21 @@
 					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
-								<div class="col-md-offset-1 col-md-10 col-sm-12">								
-									<div class="single-model-search">
-										<h2>차량 삭제</h2>									
-										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
-									</div>														
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">										
-											<button class="welcome-btn model-search-btn" onclick="DeleteFunction()">
-												Delete
-											</button>
+								<div class="col-md-offset-1 col-md-10 col-sm-12">
+									<form id ="delete_car_Form" action="fc_delete_car.jsp" method="post" onsubmit="return deleteCarFunction()">								
+										<div class="single-model-search">
+											<h2>차량 삭제</h2>									
+											<input type="text" id="Car_id" name="Car_id" placeholder="차량 번호를 입력하세요" required>														
+										</div>	
+
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">										
+												<button type="submit" class="welcome-btn model-search-btn">
+													Delete
+												</button>
+											</div>
 										</div>
-									</div>									
+									</form>									
 								</div>
 							</div>
 						</div>
@@ -355,78 +358,20 @@
 			}
 				
 			return true;
-		}
-
-		function CreateFunction() {
-			const carNumber = document.getElementById("carNumber").value;
-			const carModel = document.querySelector("#car-model").value;
-			const carPrice = document.getElementById("carPrice").value;
-			const carName = document.getElementById("carName").value;
-	
-			if (!carNumber || carModel === "default" || !carPrice || !carName) {
-				alert("모두 입력해주세요.");
-				return;
-			}
-	
-			// 차량 생성 요청
-			fetch("/create_car", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					car_number: carNumber,
-					model: carModel,
-					price: carPrice,
-					car_Name: carName
-				})
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					alert("차량 추가 성공!");
-					loadCars(); // 차량 목록 새로고침
-				} else {
-					alert("차량 추가 실패: " + data.message);
-				}
-			})
-			.catch(error => console.error("Error:", error));
-		}
+		}		
 		</script>
+		
 		<script>
-			function DeleteFunction() {
-				const carNumber = document.getElementById("carNumber").value;
+			function deleteFunction() { //자동차 정보 삭제 버튼
+				const Car_id = document.getElementById("Car_id").value.trim();
 				
 				if (!carNumber) {
 					alert("차량 번호를 다시 입력하세요.");
-					return;
+					return false;
 				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: carNumber})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("차량 삭제 성공!");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "fc_getinfo_car.jsp";
-					} else {
-						alert("차량 삭제 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
-			}
-		
-			// JSP 페이지로 이동
-			function navigateTo(page) {
-				window.location.href = `${page}.jsp`;
-			}
+				
+				return true;
+			}		
 		</script>
     </body>
 	

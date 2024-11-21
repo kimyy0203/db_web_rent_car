@@ -1,3 +1,6 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
 
 <%@ page import="java.util.List" %>
@@ -96,7 +99,7 @@
 				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
-									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
+									<li class="scroll"><a href="Admin_management.jsp" onclick="navigateTo('Admin_management')">Car management</a></li>
 									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
@@ -128,43 +131,40 @@
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-
-									<form id = "insert_car_Form" action="fc_insert_car.jsp" method="post" onsubmit="return insertCarFunction()">
-										<div style="text-align:center">차량 추가</div>
-										<div class="single-model-search">
-											<h2>차량 번호</h2>									
-											<input type="text" id="Car_id" name="Car_id" placeholder="차량 번호를 입력하세요" required>														
+									<div style="text-align:center">차량 추가</div>
+									<div class="single-model-search">
+										<h2>차량 번호</h2>									
+										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
+									</div>
+									<div class="single-model-search">
+										<h2>차량 모델</h2>										
+									<div class="model-select-icon">
+										<select class="form-control">
+											  <option value="default">차량 모델</option><!-- /.option-->
+											  <option value="소형차">소형차</option><!-- /.option-->
+											<option value="세단">세단</option><!-- /.option-->
+											  <option value="SUV">SUV</option><!-- /.option-->
+											  <option value="벤">벤</option><!-- /.option-->
+											<option value="기타">기타</option><!-- /.option-->
+										</select><!-- /.select-->
+									</div><!-- /.model-select-icon -->					
+								    </div>
+									<div class="single-model-search">
+										<h2>가격</h2>									
+										<input type="text" id="carPrice" placeholder="가격을 입력하세요" required>														
+									</div>
+									<div class="single-model-search">
+										<h2>차량 이름</h2>									
+										<input type="text" id="carName" placeholder="차량 이름을 입력하세요" required>														
+									</div>
+												
+									<div class="col-md-11 col-sm-12">
+										<div class="single-model-search text-center">
+											<button class="welcome-btn model-search-btn" onclick="CreateFunction()">
+												Create
+											</button>											
 										</div>
-										<div class="single-model-search">
-											<h2>차량 모델</h2>										
-										<div class="model-select-icon">
-											<select class="form-control" id="Car_type" name="Car_type" required>
-												<option value="default">차량 모델</option><!-- /.option-->
-												<option value="소형차">소형차</option><!-- /.option-->
-												<option value="세단">세단</option><!-- /.option-->
-												<option value="SUV">SUV</option><!-- /.option-->
-												<option value="벤">벤</option><!-- /.option-->
-												<option value="기타">기타</option><!-- /.option-->
-											</select><!-- /.select-->
-										</div><!-- /.model-select-icon -->					
-								    	</div>
-										<div class="single-model-search">
-											<h2>가격</h2>									
-											<input type="text" id="Car_cost" name="Car_cost" placeholder="가격을 입력하세요" required>														
-										</div>
-										<div class="single-model-search">
-											<h2>차량 이름</h2>									
-											<input type="text" id="Car_name" name="Car_name" placeholder="차량 이름을 입력하세요" required>														
-										</div>
-
-										<div class="col-md-11 col-sm-12">
-											<div class="single-model-search text-center">
-												<button type="submit" class="welcome-btn model-search-btn">
-													Create
-												</button>											
-											</div>
-										</div>
-									</form>
+									</div>
 									
 								</div>
 							</div>
@@ -176,55 +176,58 @@
 		<!--welcome-hero end -->
 
 		<section id="featured-cars" class="featured-cars">
-			<div class="container">
-				<div class="section-header">
-					<p>Various <span>types of</span> cars</p>
-					<h2>Type of car</h2>
-				</div>	
-				<div id="cars-list" class = "featured-cars-content">
-					<!-- 차량 목록을 데이터베이스에서 가져오는 기능 페이지(fc_getinfo_car.jsp) -->
-					
-					<%-- <script>location.href="fc_getinfo_car.jsp"</script> --%>
+    <div class="container">
+        <div class="section-header">
+            <p>Various <span>types of</span> cars</p>
+            <h2>Type of car</h2>
+        </div>
+        <div id="cars-list" class="featured-cars-content">
+            <!-- 자동차 정보 테이블 -->
+            <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Car ID</th>
+                        <th>Car Type</th>
+                        <th>Car Name</th>
+                        <th>Car Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                        Connection conn = null;
+                        PreparedStatement pstmt = null;
+                        ResultSet rs = null;
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rent_car", "root", "0808");
+                            String sql = "SELECT * FROM car";
+                            pstmt = conn.prepareStatement(sql);
+                            rs = pstmt.executeQuery();
 
-					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
-					<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
-                		<thead>
-                    		<tr>
-                        		<th>Car ID</th>
-                    		    <th>Car Type</th>
-                    		    <th>Car Name</th>
-                    		    <th>Car Cost</th>
-                    		</tr>
-                		</thead>
-                		<tbody>
-                    		<%
-                        		// Get the car list from the request
-                    		    List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
-                   			     if (carList != null && !carList.isEmpty()) {
-                    		        for (Map<String, Object> car : carList) {
-                    		%>
-                    		<tr>
-                    		    <td><%= car.get("Car_id") %></td>
-                     		    <td><%= car.get("Car_type") %></td>
-                    		    <td><%= car.get("Car_name") %></td>
-                    		    <td><%= car.get("Car_cost") %></td>
-                    		</tr>
-                    		<%
-                    		        }
-                    		    } else {
-                    		%>
-                    		<tr>
-                        		<td colspan="4">No cars available at the moment.</td>
-                    		</tr>
-                    		<%
-                       			 }
-                    		%>
-                		</tbody>
-            		</table>	
-					<!-- 차량 목록 테이블 출력 끝-->
-				</div>			
-			</div>
-		</section>
+                            while (rs.next()) {
+                    %>
+                    <tr>
+                        <td><%= rs.getInt("Car_id") %></td>
+                        <td><%= rs.getString("Car_type") %></td>
+                        <td><%= rs.getString("Car_name") %></td>
+                        <td><%= rs.getInt("Car_cost") %></td>
+                    </tr>
+                    <% 
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (rs != null) rs.close();
+                            if (pstmt != null) pstmt.close();
+                            if (conn != null) conn.close();
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
 
 		<script>
 			// AJAX를 통해 서버에서 차량 목록을 가져와 추가하는 함수
@@ -264,21 +267,18 @@
 					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
-								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<form id ="delete_car_Form" action="fc_delete_car.jsp" method="post" onsubmit="return deleteCarFunction()">								
-										<div class="single-model-search">
-											<h2>차량 삭제</h2>									
-											<input type="text" id="Car_id" name="Car_id" placeholder="차량 번호를 입력하세요" required>														
-										</div>	
-
-										<div class="col-md-11 col-sm-12">
-											<div class="single-model-search text-center">										
-												<button type="submit" class="welcome-btn model-search-btn">
-													Delete
-												</button>
-											</div>
+								<div class="col-md-offset-1 col-md-10 col-sm-12">								
+									<div class="single-model-search">
+										<h2>차량 삭제</h2>									
+										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
+									</div>														
+									<div class="col-md-11 col-sm-12">
+										<div class="single-model-search text-center">										
+											<button class="welcome-btn model-search-btn" onclick="DeleteFunction()">
+												Delete
+											</button>
 										</div>
-									</form>									
+									</div>									
 								</div>
 							</div>
 						</div>
@@ -343,35 +343,79 @@
 		<!-- Create 버튼 클릭 시 차량 고유번호 값을 가져와서 처리하는 함수 -->
 		<script>
 		function logoutFunction() { // 로그아웃 버튼
-			window.location.href = `fc_logout.jsp`;
-		}
-
-		function insertCarFunction() { // 자동차 정보 추가 버튼
-			const Car_id = document.getElementById("Car_id").value.trim();
-			const Car_type = document.getElementById("Car_type").value.trim();
-			const Car_cost = document.getElementById("Car_cost").value.trim();
-			const Car_name = document.getElementById("Car_name").value.trim();
-
-			if (!Car_id || Car_type=="default" || !Car_cost || !Car_name) {
-				alert("모두 입력해주세요");
-				return false;
+				window.location.href = `fc_logout.jsp`;
 			}
-				
-			return true;
-		}		
+
+		function CreateFunction() {
+			const carNumber = document.getElementById("carNumber").value;
+			const carModel = document.querySelector("#car-model").value;
+			const carPrice = document.getElementById("carPrice").value;
+			const carName = document.getElementById("carName").value;
+	
+			if (!carNumber || carModel === "default" || !carPrice || !carName) {
+				alert("모두 입력해주세요.");
+				return;
+			}
+	
+			// 차량 생성 요청
+			fetch("/create_car", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					car_number: carNumber,
+					model: carModel,
+					price: carPrice,
+					car_Name: carName
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert("차량 추가 성공!");
+					loadCars(); // 차량 목록 새로고침
+				} else {
+					alert("차량 추가 실패: " + data.message);
+				}
+			})
+			.catch(error => console.error("Error:", error));
+		}
 		</script>
-		
 		<script>
-			function deleteFunction() { //자동차 정보 삭제 버튼
-				const Car_id = document.getElementById("Car_id").value.trim();
+			function DeleteFunction() {
+				const carNumber = document.getElementById("carNumber").value;
 				
 				if (!carNumber) {
 					alert("차량 번호를 다시 입력하세요.");
-					return false;
+					return;
 				}
-				
-				return true;
-			}		
+		
+				// 예시: 서버로 데이터를 보내는 POST 요청
+				fetch("your_login_api_endpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({id: carNumber})
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("차량 삭제 성공!");
+						// 차량 삭제 성공 시 이동할 페이지 설정
+						window.location.href = "Admin_management.jsp";
+					} else {
+						alert("차량 삭제 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+			}
+		
+			// JSP 페이지로 이동
+			function navigateTo(page) {
+				window.location.href = `${page}.jsp`;
+			}
 		</script>
     </body>
 	
