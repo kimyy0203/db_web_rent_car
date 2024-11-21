@@ -200,20 +200,22 @@
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">								
-									<div class="single-model-search">
-										<h2>USER ID</h2>									
-										<input type="text" id="userId" placeholder="아이디를 입력하세요" required>														
-									</div>														
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">										
-											<button class="welcome-btn model-search-btn" onclick="AssignFunction1()">
-												승인
-											</button>
-											<button class="welcome-btn model-search-btn" onclick="AssignFunction2()">
-												반납
-											</button>
+									<form name="form1(해당 폼 이름 변경)" action="">
+										<div class="single-model-search">
+											<h2>USER ID</h2>									
+											<input type="text" id="userId" placeholder="아이디를 입력하세요" required>														
+										</div>														
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">										
+												<button class="welcome-btn model-search-btn" onclick="AssignFunction1()">
+													승인
+												</button>
+												<button class="welcome-btn model-search-btn" onclick="AssignFunction2()">
+													반납
+												</button>
+											</div>
 										</div>
-									</div>									
+									</form>
 								</div>
 							</div>
 						</div>
@@ -285,6 +287,9 @@
 			function AssignFunction1() { //승인버튼
 				const userId = document.getElementById("userId").value;
 				
+				// form1.action = "";
+				// form1.submit();
+
 				if (!userId) {
 					alert("아이디를 다시 입력하세요.");
 					return;
@@ -314,6 +319,8 @@
 			function AssignFunction2() { //반납 버튼
 				const userId = document.getElementById("userId").value;
 				
+				form1.action = "";
+
 				if (!userId) {
 					alert("아이디를 다시 입력하세요.");
 					return;
