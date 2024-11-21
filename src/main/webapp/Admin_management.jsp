@@ -96,7 +96,7 @@
 				            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
-									<li class="scroll"><a href="Admin_management.jsp" onclick="navigateTo('Admin_management')">Car management</a></li>
+									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
 									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
@@ -183,7 +183,9 @@
 				</div>	
 				<div id="cars-list" class = "featured-cars-content">
 					<!-- 차량 목록을 데이터베이스에서 가져오는 기능 페이지(fc_getinfo_car.jsp) -->
-					<script>location.href="fc_getinfo_car.jsp"</script>
+					
+					<%-- <script>location.href="fc_getinfo_car.jsp"</script> --%>
+
 					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
 					<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
                 		<thead>
@@ -413,7 +415,7 @@
 					if (data.success) {
 						alert("차량 삭제 성공!");
 						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_management.jsp";
+						window.location.href = "fc_getinfo_car.jsp";
 					} else {
 						alert("차량 삭제 실패: " + data.message);
 					}

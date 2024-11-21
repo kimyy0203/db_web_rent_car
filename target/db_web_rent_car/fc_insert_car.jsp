@@ -55,7 +55,7 @@
 		int result = pstmt.executeUpdate();
 		
 		if (result == 1) { // 성공적으로 추가된 경우
-            response.sendRedirect("Admin_management.jsp");
+            response.sendRedirect("fc_getinfo_car.jsp");
         } else { // 삽입 실패한 경우
             response.sendRedirect("fc_insert_car_fail.jsp");
         }

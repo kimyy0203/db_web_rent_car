@@ -88,7 +88,7 @@
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 									<div class="single-model-search">
 											<h2>자동차 정보 추가에 실패했습니다.  <다시 추가하기> 버튼을 눌러주세요.</h2>										
-											<a href="Admin_management.jsp">다시 추가하기</a>				
+											<a href="fc_getinfo_car.jsp">다시 추가하기</a>				
 									</div>									
 								</div>
 							</div>
