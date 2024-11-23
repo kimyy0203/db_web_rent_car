@@ -46,23 +46,10 @@
         <link rel="stylesheet" href="assets/css/style.css">
         
         <!--responsive.css-->
-        <link rel="stylesheet" href="assets/css/responsive.css">
-        
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
+        <link rel="stylesheet" href="assets/css/responsive.css">        
     </head>
 	
-	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-	
+	<body>		
 		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
@@ -218,32 +205,6 @@
 				}
 				
 				return true;
-
-				/*
-				//  POST 요청으로 서버로 회원가입 정보를 전송
-				fetch("your_login_api_endpoint", { // 회원가입 API의 엔드포인트 URL로 교체
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({ 
-						id: userId,
-						password: userPassword,
-						name: userName						
-					 })
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("회원가입 성공!");
-						// 회원가입 성공 시 이동할 페이지 설정
-						window.location.href = "User_login.jsp";
-					} else {
-						alert("회원가입 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
-				*/	
 			}
 		
 			// JSP 페이지로 이동

@@ -48,22 +48,9 @@
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
         
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-		
-
     </head>
 	
-	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-	
+	<body>		
 		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
@@ -157,41 +144,7 @@
 				margin-top: 30px;
 			}
 		</style>
-		<script>
-			// 서버에서 사용자 목록을 가져와 각 섹션에 추가하는 함수
-			function loadUsers() {
-				fetch('/get_users')
-					.then(response => response.json())
-					.then(users => {
-						const waitingList = document.getElementById('waiting-users-list');
-						const rentingList = document.getElementById('renting-users-list');
-						
-						waitingList.innerHTML = ''; // 초기화
-						rentingList.innerHTML = ''; // 초기화
 		
-						users.forEach(user => {
-							const userHTML = `
-								<div class="single-featured-users">
-									<div class="featured-user-txt">
-										<h2><a href="#">${user.name}</a></h2>
-										<p>ID: ${user.id}</p>
-										<p>Email: ${user.email}</p>
-									</div>
-								</div>`;
-							
-							if (user.status === 'waiting') {
-								waitingList.innerHTML += userHTML;
-							} else if (user.status === 'renting') {
-								rentingList.innerHTML += userHTML;
-							}
-						});
-					})
-					.catch(error => console.error('Error loading users:', error));
-			}
-			//페이지 로드시 사용자 목록 보여줌.
-			document.addEventListener("DOMContentLoaded", loadUsers);
-		</script>
-
 		<!--car-rent-start-->
 		<section>
 			<div class="container">

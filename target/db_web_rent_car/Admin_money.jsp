@@ -47,23 +47,9 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-		
-
     </head>
 	
-	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-	
+	<body>		
 		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
@@ -132,40 +118,6 @@
 				</div>							
 			</div>
 		</section>
-		<script>
-			// 서버에서 사용자 목록을 가져와 각 섹션에 추가하는 함수
-			function loadCost() {
-				fetch('/get_cars')
-					.then(response => response.json())
-					.then(cars => {
-						const carsList = document.getElementById('cost');
-						carsList.innerHTML = ''; // 초기화
-						cars.forEach(car => {
-							carsList.innerHTML += `
-								<div class="col-lg-3 col-md-4 col-sm-6">
-									<div class="single-featured-cars">
-										<div class="featured-img-box">
-											<div class="featured-cars-img">
-												<img src="${car.image_url}" alt="car">
-											</div>
-										</div>
-										<div class="featured-cars-txt">
-											<h2><a href="#">${car.model}</a></h2>
-											<h3>$${car.price}</h3>
-										</div>
-									</div>
-								</div>`;
-						});
-					})
-					.catch(error => console.error('Error loading cars:', error));
-			}
-			//페이지 로드시 비용 보여줌.
-			document.addEventListener("DOMContentLoaded", loadCost);
-		</script>
-
-		<!--car-rent-start-->
-		
-		<!--car-rent-end-->
 		
 		<!--contact start-->
 		<footer id="contact"  class="contact">
