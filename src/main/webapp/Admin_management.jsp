@@ -1,5 +1,4 @@
 <%@page import="java.sql.ResultSet"%>
-
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
@@ -298,23 +297,23 @@
         
 		<!-- Create 버튼 클릭 시 차량 고유번호 값을 가져와서 처리하는 함수 -->
 		<script>
-		function logoutFunction() { // 로그아웃 버튼
-			window.location.href = `fc_logout.jsp`;
-		}
-
-		function insertCarFunction() { // 자동차 정보 추가 버튼
-			const Car_id = document.getElementById("Car_id").value.trim();
-			const Car_type = document.getElementById("Car_type").value.trim();
-			const Car_cost = document.getElementById("Car_cost").value.trim();
-			const Car_name = document.getElementById("Car_name").value.trim();
-
-			if (!Car_id || Car_type=="default" || !Car_cost || !Car_name) {
-				alert("모두 입력해주세요");
-				return false;
+			function logoutFunction() { // 로그아웃 버튼
+				window.location.href = `fc_logout.jsp`;
 			}
+
+			function insertCarFunction() { // 자동차 정보 추가 버튼
+				const Car_id = document.getElementById("Car_id").value.trim();
+				const Car_type = document.getElementById("Car_type").value.trim();
+				const Car_cost = document.getElementById("Car_cost").value.trim();
+				const Car_name = document.getElementById("Car_name").value.trim();
+
+				if (!Car_id || Car_type=="default" || !Car_cost || !Car_name) {
+					alert("모두 입력해주세요");
+					return false;
+				}
 				
-			return true;
-		}		
+				return true;
+			}		
 		</script>
 
 		<script>

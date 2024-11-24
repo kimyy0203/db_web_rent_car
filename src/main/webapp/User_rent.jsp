@@ -1,3 +1,8 @@
+<%@page import="java.sql.ResultSet"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -74,7 +79,13 @@
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">									
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
-							</div>		
+							</div>
+							<script>
+								function navigateTo(page) {
+    								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
+   									window.location.href = `${page}.jsp`;
+								}
+							</script>			
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -96,28 +107,29 @@
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div class="single-model-search">
+									<form id = "search_car_Form" action="fc_search_car.jsp" method="post" onsubmit="return searchCarFunction()">
+										<div class="single-model-search">
 											<h2>Select Model</h2>										
-										<div class="model-select-icon">
-											<select id="carModelSelect" class="form-control" onchange="loadCars(this.value)">
-												<option value="">전체 보기</option>
-												<option value="소형차">소형차</option>
-												<option value="세단">세단</option>
-												<option value="SUV">SUV</option>
-												<option value="벤">벤</option>
-												<option value="기타">기타</option>
-											</select>
-										</div><!-- /.model-select-icon -->					
-									</div>
-									
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">
-											<button class="welcome-btn model-search-btn" onclick="loadCars(document.getElementById('carModelSelect').value)">
-												search
-											</button>
+											<div class="model-select-icon">
+												<select class="form-control" id="Car_type" name="Car_type" required>
+													<option value="default">전체</option><!-- /.option-->
+													<option value="소형차">소형차</option><!-- /.option-->
+													<option value="세단">세단</option><!-- /.option-->
+													<option value="SUV">SUV</option><!-- /.option-->
+													<option value="벤">벤</option><!-- /.option-->
+													<option value="기타">기타</option><!-- /.option-->
+												</select><!-- /.select-->
+											</div><!-- /.model-select-icon -->					
 										</div>
-									</div>
 									
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">
+												<button type="submit" class="welcome-btn model-search-btn">
+													Search
+												</button>											
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -135,7 +147,46 @@
 					<h2>Type of car</h2>
 				</div>	
 				<div id="cars-list" class = "featured-cars-content">
+					<!-- 차량 목록을 데이터베이스에서 가져오는 기능 페이지(fc_getinfo_car.jsp) -->
+					
+					<%-- <script>location.href="fc_getinfo_car.jsp"</script> --%>
+
 					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
+					<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                		<thead>
+                    		<tr>
+                        		<th>Car ID</th>
+                    		    <th>Car Type</th>
+                    		    <th>Car Name</th>
+                    		    <th>Car Cost</th>
+                    		</tr>
+                		</thead>
+                		<tbody>
+                    		<%
+                        		// Get the car list from the request
+                    		    List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
+                   			     if (carList != null && !carList.isEmpty()) {
+                    		        for (Map<String, Object> car : carList) {
+                    		%>
+                    		<tr>
+                    		    <td><%= car.get("Car_id") %></td>
+                     		    <td><%= car.get("Car_type") %></td>
+                    		    <td><%= car.get("Car_name") %></td>
+                    		    <td><%= car.get("Car_cost") %></td>
+                    		</tr>
+                    		<%
+                    		        }
+                    		    } else {
+                    		%>
+                    		<tr>
+                        		<td colspan="4">No cars available at the moment.</td>
+                    		</tr>
+                    		<%
+                       			 }
+                    		%>
+                		</tbody>
+            		</table>	
+					<!-- 차량 목록 테이블 출력 끝-->
 				</div>			
 			</div>
 		</section>
@@ -146,18 +197,20 @@
 					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
-								<div class="col-md-offset-1 col-md-10 col-sm-12">								
-									<div class="single-model-search">
-										<h2>차량 대여</h2>									
-										<input type="text" id="carNumber" placeholder="차량 번호를 입력하세요" required>														
-									</div>														
-									<div class="col-md-11 col-sm-12">
-										<div class="single-model-search text-center">										
-											<button class="welcome-btn model-search-btn" onclick="RentFunction()">
-												대여
-											</button>
+								<div class="col-md-offset-1 col-md-10 col-sm-12">
+									<form id ="rent_car_Form" action="fc_rent_car.jsp" method="post" onsubmit="return rentCarFunction()">							
+										<div class="single-model-search">
+											<h2>차량 대여</h2>									
+											<input type="text" id="Car_id" name="Car_id" placeholder="차량 번호를 입력하세요" required>														
+										</div>														
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">										
+												<button type="submit" class="welcome-btn model-search-btn">
+													대여
+												</button>
+											</div>
 										</div>
-									</div>									
+									</form>								
 								</div>
 							</div>
 						</div>
@@ -221,43 +274,25 @@
         <script src="assets/js/custom.js"></script>
         
 		<script>
-			function logoutFunction() {
+			function logoutFunction() { //로그아웃 버튼
 				window.location.href = `fc_logout.jsp`;
 			}
-
-			function RentFunction() {
-				const carNumber = document.getElementById("carNumber").value;
+			function searchCarFunction() { // 자동차 검색 버튼				
+				return true;
+			}	
+			
+		</script>
+		<script>
+			function rentCarFunctionFunction() { //자동차 대여 버튼
+				const Car_id = document.getElementById("Car_id").value.trim();
 				
 				if (!carNumber) {
 					alert("차량 번호를 다시 입력하세요.");
-					return;
+					return false;
 				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: carNumber})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("해당 차량을 대여 신청이 완료되었습니다.");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "User.jsp";
-					} else {
-						alert("대여 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
-			}
-		
-			// JSP 페이지로 이동
-			function navigateTo(page) {
-				window.location.href = `${page}.jsp`;
-			}
+				
+				return true;
+			}		
 		</script>
     </body>
 	
