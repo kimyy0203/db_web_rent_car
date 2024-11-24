@@ -283,7 +283,7 @@
 			
 		</script>
 		<script>
-			function rentCarFunctionFunction() { //자동차 대여 버튼
+			function rentCarFunction() { //자동차 대여 버튼
 				const Car_id = document.getElementById("Car_id").value.trim();
 				
 				if (!carNumber) {

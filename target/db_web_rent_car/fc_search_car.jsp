@@ -10,6 +10,8 @@
 
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+    request.setCharacterEncoding("UTF-8");
+
 	// 사용자 세션 검증
 	String User_id = (String)session.getAttribute("User_id");
 	if (User_id == null) {
@@ -33,17 +35,15 @@
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
 		
         // MySQL에 맞게 SQL 문 작성 (defalut는 car 테이블의 모든 값을 가져오도록 한다)
-        // form의 method="post"로 설정하면 request.getParameter시 한글이 깨지기 때문에 해당 코드 필요
-        request.setCharacterEncoding("UTF-8");
         String Car_type = request.getParameter("Car_type");
         String sql;
         if("default".equals(Car_type)) {
-            sql = "SELECT * FROM car";
+            sql = "SELECT * FROM car WHERE Car_id NOT IN (SELECT Car_id FROM renting)";
             // pstmt 생성
 		    pstmt = conn.prepareStatement(sql);
         }
         else {
-            sql = "SELECT * FROM car WHERE Car_type = ?";
+            sql = "SELECT * FROM car WHERE Car_type = ? AND Car_id NOT IN (SELECT Car_id FROM renting)";
             // pstmt 생성
 		    pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Car_type);
