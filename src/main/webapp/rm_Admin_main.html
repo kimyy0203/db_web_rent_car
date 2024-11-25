@@ -129,9 +129,9 @@
 							<tbody>
 								<%
 									// Get the car list from the request
-									List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
-										if (carList != null && !carList.isEmpty()) {
-										for (Map<String, Object> car : carList) {
+									List<Map<String, Object>> carList1 = (List<Map<String, Object>>) request.getAttribute("carList1");
+										if (carList1 != null && !carList1.isEmpty()) {
+										for (Map<String, Object> car : carList1) {
 								%>
 								<tr>
 									<td><%= car.get("User_id") %></td>
@@ -170,9 +170,9 @@
 							<tbody>
 								<%
 									// Get the car list from the request
-									List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
-										if (carList != null && !carList.isEmpty()) {
-										for (Map<String, Object> car : carList) {
+									List<Map<String, Object>> carList2 = (List<Map<String, Object>>) request.getAttribute("carList2");
+										if (carList2 != null && !carList2.isEmpty()) {
+										for (Map<String, Object> car : carList2) {
 								%>
 								<tr>
 									<td><%= car.get("User_id") %></td>

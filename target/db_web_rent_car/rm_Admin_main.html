@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="no-js" lang="en">
-<head>
-<!-- meta data -->
+
+    <head>
+        <!-- meta data -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>login fail</title>
+        <title>Hanseo Car rent_admin_rent</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -45,10 +46,11 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-</head>
-<body>
-
-	<!--welcome-hero start -->
+        
+    </head>
+	
+	<body>		
+		<!--welcome-hero start -->
 		<section id="home" class="welcome-hero">
 
 			<!-- top-area Start -->
@@ -60,10 +62,29 @@
 				        <div class="container">
 
 				            <!-- Start Header Navigation -->
-				            <div class="navbar-header">				                
+				            <div class="navbar-header">
+				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+				                    <i class="fa fa-bars"></i>
+				                </button>
 				                <a class="navbar-brand" href="index.jsp">Hanseo Car rent<span></span></a>
+
 				            </div><!--/.navbar-header-->
-				            <!-- End Header Navigation -->				            
+				            <!-- End Header Navigation -->
+							 <!-- Collect the nav links, forms, and other content for toggling -->
+							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
+									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
+								</ul>
+							</div>
+							<script>
+								function navigateTo(page) {
+    								console.log(`${page} 이동 중...`); // 디버깅용 콘솔 메시지
+   									window.location.href = `${page}.jsp`;
+								}
+							</script>						            
 				        </div><!--/.container-->
 				    </nav><!--/nav-->
 				    <!-- End Navigation -->
@@ -75,30 +96,153 @@
 
 			<div class="container">
 				<div class="welcome-hero-txt">
-					<h2>login fail</h2>					
+					<h2>we can service for you</h2>					
 				</div>
 			</div>
 
+			
+
+		</section><!--/.welcome-hero-->
+		<!--welcome-hero end -->
+
+		<section id="featured-cars" class="featured-cars">
 			<div class="container">
+				<div class="section-header">
+					<p>List of <span>Registered</span> Users</p>
+					<h2>User Information</h2>
+				</div>	
 				<div class="row">
-					<div class="col-md-12">
+					<!-- Left Column: Users waiting to rent a car -->
+					<div id="cars-list" class = "featured-cars-content">
+						<!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
+						
+						<%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
+	
+						<!-- User 목록이 여기에 동적으로 추가됩니다. -->
+						<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+							<thead>
+								<tr>
+									<th>User ID</th>
+									<th>Car ID</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									// Get the car list from the request
+									List<Map<String, Object>> carList1 = (List<Map<String, Object>>) request.getAttribute("carList1");
+										if (carList1 != null && !carList1.isEmpty()) {
+										for (Map<String, Object> car : carList1) {
+								%>
+								<tr>
+									<td><%= car.get("User_id") %></td>
+									 <td><%= car.get("Car_id") %></td>									
+								</tr>
+								<%
+										}
+									} else {
+								%>
+								<tr>
+									<td colspan="4">No ID renting Car.</td>
+								</tr>
+								<%
+										}
+								%>
+							</tbody>
+						</table>	
+						<!-- 대여 신청한 유저 출력 끝-->
+					</div>			
+		
+					<!-- Right Column: Users currently renting a car -->
+					<div id="cars-list" class = "featured-cars-content">
+						<!-- renting 데이터베이스에서 Date_st = null이 아닌 가져오는 기능 페이지(fc_getinfo_user_renting.jsp) -->
+						
+						<%-- <script>location.href="fc_getinfo_user_renting.jsp"</script> --%>
+	
+						<!-- User 여기에 동적으로 추가됩니다. -->
+						<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+							<thead>
+								<tr>
+									<th>User ID</th>
+									<th>Car ID</th>
+									<th>Date_st</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									// Get the car list from the request
+									List<Map<String, Object>> carList2 = (List<Map<String, Object>>) request.getAttribute("carList2");
+										if (carList2 != null && !carList2.isEmpty()) {
+										for (Map<String, Object> car : carList2) {
+								%>
+								<tr>
+									<td><%= car.get("User_id") %></td>
+									<td><%= car.get("Car_id") %></td>
+									<td><%= car.get("Date_st") %></td>										
+								</tr>
+								<%
+										}
+									} else {
+								%>
+								<tr>
+									<td colspan="4">No ID renting Car.</td>
+								</tr>
+								<%
+										}
+								%>
+							</tbody>
+						</table>	
+						<!-- 대여 신청한 유저 출력 끝-->
+					</div>		
+				</div>				
+			</div>
+		</section>
+		<style>
+			.featured-cars .col-md-6 {
+				float: left;
+				padding: 30px;
+			}
+			.featured-cars .row {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			#waiting-users-list, #renting-users-list {
+				margin-top: 30px;
+			}
+		</style>
+		
+		<!--car-rent-start-->
+		<section>
+			<div class="container">
+				<div class="row" style="margin-top: 200px;">
+					<div class="col-md-11">
 						<div class="model-search-content">
 							<div class="row">
-								<div class="col-md-offset-1 col-md-10 col-sm-12">
-									<div class="single-model-search">
-											<h2>로그인에 실패했습니다. 아이디와, 비밀번호 다시 확인해주세요. <다시 로그인하기> 누르세요.</h2>										
-											<a href="User_login.jsp">다시 로그인하기</a>				
-									</div>									
+								<div class="col-md-offset-1 col-md-10 col-sm-12">								
+									<form name="form1(해당 폼 이름 변경)" action="">
+										<div class="single-model-search">
+											<h2>USER ID</h2>									
+											<input type="text" id="userId" placeholder="아이디를 입력하세요" required>														
+										</div>														
+										<div class="col-md-11 col-sm-12">
+											<div class="single-model-search text-center">										
+												<button class="welcome-btn model-search-btn" onclick="AssignFunction1()">
+													승인
+												</button>
+												<button class="welcome-btn model-search-btn" onclick="AssignFunction2()">
+													반납
+												</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-		</section><!--/.welcome-hero-->
-		<!--welcome-hero end -->
-
+		</section>
+		<!--car-rent-end-->
+		
 		<!--contact start-->
 		<footer id="contact"  class="contact">
 			<div class="container">
@@ -153,5 +297,79 @@
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
         
+		<script>
+			function logoutFunction() { // 로그아웃 버튼
+				window.location.href = `fc_logout.jsp`;
+			}
+
+			function AssignFunction1() { //승인버튼
+				const userId = document.getElementById("userId").value;
+				
+				// form1.action = "";
+				// form1.submit();
+
+				if (!userId) {
+					alert("아이디를 다시 입력하세요.");
+					return;
+				}
+		
+				// 예시: 서버로 데이터를 보내는 POST 요청
+				fetch("your_login_api_endpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({id: userId})
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("차량 삭제 성공!");
+						// 차량 삭제 성공 시 이동할 페이지 설정
+						window.location.href = "Admin_rent.jsp";
+					} else {
+						alert("차량 삭제 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+			}
+
+			function AssignFunction2() { //반납 버튼
+				const userId = document.getElementById("userId").value;
+				
+				form1.action = "";
+
+				if (!userId) {
+					alert("아이디를 다시 입력하세요.");
+					return;
+				}
+		
+				// 예시: 서버로 데이터를 보내는 POST 요청
+				fetch("your_login_api_endpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({id: userId})
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("차량 반납 성공!");
+						// 차량 삭제 성공 시 이동할 페이지 설정
+						window.location.href = "Admin_rent.jsp";
+					} else {
+						alert("차량 반납 실패: " + data.message);
+					}
+				})
+				.catch(error => console.error("Error:", error));
+			}
+		
+			// JSP 페이지로 이동
+			function navigateTo(page) {
+				window.location.href = `${page}.jsp`;
+			}
+		</script>
     </body>
+	
 </html>
