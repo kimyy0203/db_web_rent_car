@@ -121,6 +121,7 @@
             <div class="row">
                <!-- Left Column: Users waiting to rent a car -->
                <div id="cars-list" class = "featured-cars-content">
+			   	<h2>Users Waiting to Rent</h2>
                   <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
                   
                   <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
@@ -161,6 +162,7 @@
       
                <!-- Right Column: Users currently renting a car -->
                <div id="cars-list" class = "featured-cars-content">
+			   <h2>Users currently renting</h2>
                   <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
                   
                   <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
@@ -211,6 +213,8 @@
 			.featured-cars .row {
 				display: flex;
 				flex-wrap: wrap;
+				justify-content: space-between; /* 양쪽으로 간격 균등 분배 */
+        		gap: 20px; /* 두 표 간의 간격 */
 			}
 			#waiting-users-list, #renting-users-list {
 				margin-top: 30px;
