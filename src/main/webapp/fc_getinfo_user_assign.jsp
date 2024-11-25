@@ -38,7 +38,7 @@
       conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
       
       // 첫 번째 쿼리 실행
-        String sql1 = "SELECT * FROM car WHERE Date_st IS NULL";
+        String sql1 = "SELECT * FROM renting WHERE Date_st IS NULL";
         pstmt = conn.prepareStatement(sql1);
         rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -62,9 +62,9 @@
             carList2.add(carData);
         }
       // 데이터를 request 객체에 저장
-        request1.setAttribute("carList1", carList1);
+        request.setAttribute("carList1", carList1);
         // 다음 JSP로 포워드
-        request1.getRequestDispatcher("Admin_rent.jsp").forward(request1, response);
+        request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
 
    } catch(Exception e) {
       e.printStackTrace();
@@ -72,8 +72,8 @@
    } finally {
       try {
          if (conn != null) conn.close();
-         if (pstmt != null) pstmt1.close();
-         if (rs != null) rs1.close();
+         if (pstmt != null) pstmt.close();
+         if (rs != null) rs.close();
       } catch(Exception e) {
          e.printStackTrace();
       }

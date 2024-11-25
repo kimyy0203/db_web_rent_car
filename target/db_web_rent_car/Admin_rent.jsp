@@ -1,3 +1,9 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.List" %>
+<%@page import="java.util.Map" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.HashMap" %>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -107,30 +113,96 @@
 		<!--welcome-hero end -->
 
 		<section id="featured-cars" class="featured-cars">
-			<div class="container">
-				<div class="section-header">
-					<p>List of <span>Registered</span> Users</p>
-					<h2>User Information</h2>
-				</div>	
-				<div class="row">
-					<!-- Left Column: Users waiting to rent a car -->
-					<div class="col-md-6">
-						<h3>Users Waiting to Rent</h3>
-						<div id="waiting-users-list" class="featured-users-content">
-							<!-- 차량 대기 중 사용자 목록이 여기에 추가됩니다. -->
-						</div>
-					</div>
-		
-					<!-- Right Column: Users currently renting a car -->
-					<div class="col-md-6">
-						<h3>Users Currently Renting</h3>
-						<div id="renting-users-list" class="featured-users-content">
-							<!-- 차량을 빌린 사용자 목록이 여기에 추가됩니다. -->
-						</div>
-					</div>
-				</div>				
-			</div>
-		</section>
+         <div class="container">
+            <div class="section-header">
+               <p>List of <span>Registered</span> Users</p>
+               <h2>User Information</h2>
+            </div>   
+            <div class="row">
+               <!-- Left Column: Users waiting to rent a car -->
+               <div id="cars-list" class = "featured-cars-content">
+                  <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
+                  
+                  <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
+   
+                  <!-- User 목록이 여기에 동적으로 추가됩니다. -->
+                  <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                     <thead>
+                        <tr>
+                           <th>User ID</th>
+                           <th>Car ID</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%
+                           // Get the car list from the request
+                           List<Map<String, Object>> carList1 = (List<Map<String, Object>>) request.getAttribute("carList1");
+                              if (carList1 != null && !carList1.isEmpty()) {
+                              for (Map<String, Object> car : carList1) {
+                        %>
+                        <tr>
+                           <td><%= car.get("User_id") %></td>
+                            <td><%= car.get("Car_id") %></td>                           
+                        </tr>
+                        <%
+                              }
+                           } else {
+                        %>
+                        <tr>
+                           <td colspan="4">No ID renting Car.</td>
+                        </tr>
+                        <%
+                              }
+                        %>
+                     </tbody>
+                  </table>   
+                  <!-- 대여 신청한 유저 출력 끝-->
+               </div>         
+      
+               <!-- Right Column: Users currently renting a car -->
+               <div id="cars-list" class = "featured-cars-content">
+                  <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
+                  
+                  <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
+   
+                  <!-- User 여기에 동적으로 추가됩니다. -->
+                  <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                     <thead>
+                        <tr>
+                           <th>User ID</th>
+                           <th>Car ID</th>
+                           <th>Date_st</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%
+                           // Get the car list from the request
+                           List<Map<String, Object>> carList2 = (List<Map<String, Object>>) request.getAttribute("carList2");
+                              if (carList2 != null && !carList2.isEmpty()) {
+                              for (Map<String, Object> car : carList2) {
+                        %>
+                        <tr>
+                           <td><%= car.get("User_id") %></td>
+                           <td><%= car.get("Car_id") %></td>
+                           <td><%= car.get("Date_st") %></td>                              
+                        </tr>
+                        <%
+                              }
+                           } else {
+                        %>
+                        <tr>
+                           <td colspan="4">No ID renting Car.</td>
+                        </tr>
+                        <%
+                              }
+                        %>
+                     </tbody>
+                  </table>   
+                  <!-- 대여 신청한 유저 출력 끝-->
+               </div>      
+            </div>            
+         </div>
+      </section>
 		<style>
 			.featured-cars .col-md-6 {
 				float: left;
@@ -153,17 +225,17 @@
 						<div class="model-search-content">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-10 col-sm-12">								
-									<form name="form1(해당 폼 이름 변경)" action="">
+									<form id="admin_rent_form" name="admin_rent_form" action="" method="post">
 										<div class="single-model-search">
 											<h2>USER ID</h2>									
-											<input type="text" id="userId" placeholder="아이디를 입력하세요" required>														
+											<input type="text" id="User_id" name="User_id" placeholder="아이디를 입력하세요" required>														
 										</div>														
 										<div class="col-md-11 col-sm-12">
 											<div class="single-model-search text-center">										
-												<button class="welcome-btn model-search-btn" onclick="AssignFunction1()">
+												<button type="submit" class="welcome-btn model-search-btn" onclick="AssignFunction()">
 													승인
 												</button>
-												<button class="welcome-btn model-search-btn" onclick="AssignFunction2()">
+												<button type="submit" class="welcome-btn model-search-btn" onclick="ReleaseFunction()">
 													반납
 												</button>
 											</div>
@@ -237,67 +309,28 @@
 				window.location.href = `fc_logout.jsp`;
 			}
 
-			function AssignFunction1() { //승인버튼
-				const userId = document.getElementById("userId").value;
+			function AssignFunction() { //승인버튼
+				const User_id = document.getElementById("User_id").value.trim();;
 				
-				// form1.action = "";
-				// form1.submit();
-
-				if (!userId) {
+				if (!User_id) {
 					alert("아이디를 다시 입력하세요.");
 					return;
 				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: userId})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("차량 삭제 성공!");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.jsp";
-					} else {
-						alert("차량 삭제 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
+
+				admin_rent_form.action = "fc_assign_car.jsp";
+				admin_rent_form.submit();
 			}
 
-			function AssignFunction2() { //반납 버튼
-				const userId = document.getElementById("userId").value;
+			function ReleaseFunction() { //반납 버튼
+				const User_id = document.getElementById("User_id").value.trim();;
 				
-				form1.action = "";
-
-				if (!userId) {
+				if (!User_id) {
 					alert("아이디를 다시 입력하세요.");
 					return;
 				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: userId})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("차량 반납 성공!");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.jsp";
-					} else {
-						alert("차량 반납 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
+
+				admin_rent_form.action = "fc_release_car.jsp";
+				admin_rent_form.submit();
 			}
 		
 			// JSP 페이지로 이동

@@ -88,7 +88,7 @@
 								<div class="col-md-offset-1 col-md-10 col-sm-12">
 									<div class="single-model-search">
 											<h2>대여 승인이 완료되었습니다!  <돌아가기> 버튼을 눌러주세요.</h2>										
-											<a href="Admin_rent.jsp">돌아가기</a>				
+											<a href="fc_getinfo_user_assign.jsp">돌아가기</a>				
 									</div>									
 								</div>
 							</div>

@@ -113,57 +113,96 @@
 		<!--welcome-hero end -->
 
 		<section id="featured-cars" class="featured-cars">
-			<div class="container">
-				<div class="section-header">
-					<p>List of <span>Registered</span> Users</p>
-					<h2>User Information</h2>
-				</div>	
-				<div class="row">
-					<!-- Left Column: Users waiting to rent a car -->
-					<div id="cars-list" class = "featured-cars-content">
-						<!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
-						
-						<%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
-	
-						<!-- User 목록이 여기에 동적으로 추가됩니다. -->
-						<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
-							<thead>
-								<tr>
-									<th>User ID</th>
-									<th>Car ID</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									// Get the car list from the request
-									List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
-										if (carList != null && !carList.isEmpty()) {
-										for (Map<String, Object> car : carList) {
-								%>
-								<tr>
-									<td><%= car.get("User_id") %></td>
-									 <td><%= car.get("Car_id") %></td>									
-								</tr>
-								<%
-										}
-									} else {
-								%>
-								<tr>
-									<td colspan="4">No ID renting Car.</td>
-								</tr>
-								<%
-										}
-								%>
-							</tbody>
-						</table>	
-						<!-- 대여 신청한 유저 출력 끝-->
-					</div>			
-		
-					<!-- Right Column: Users currently renting a car -->
-							
-				</div>				
-			</div>
-		</section>
+         <div class="container">
+            <div class="section-header">
+               <p>List of <span>Registered</span> Users</p>
+               <h2>User Information</h2>
+            </div>   
+            <div class="row">
+               <!-- Left Column: Users waiting to rent a car -->
+               <div id="cars-list" class = "featured-cars-content">
+                  <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
+                  
+                  <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
+   
+                  <!-- User 목록이 여기에 동적으로 추가됩니다. -->
+                  <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                     <thead>
+                        <tr>
+                           <th>User ID</th>
+                           <th>Car ID</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%
+                           // Get the car list from the request
+                           List<Map<String, Object>> carList1 = (List<Map<String, Object>>) request.getAttribute("carList1");
+                              if (carList1 != null && !carList1.isEmpty()) {
+                              for (Map<String, Object> car : carList1) {
+                        %>
+                        <tr>
+                           <td><%= car.get("User_id") %></td>
+                            <td><%= car.get("Car_id") %></td>                           
+                        </tr>
+                        <%
+                              }
+                           } else {
+                        %>
+                        <tr>
+                           <td colspan="4">No ID renting Car.</td>
+                        </tr>
+                        <%
+                              }
+                        %>
+                     </tbody>
+                  </table>   
+                  <!-- 대여 신청한 유저 출력 끝-->
+               </div>         
+      
+               <!-- Right Column: Users currently renting a car -->
+               <div id="cars-list" class = "featured-cars-content">
+                  <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
+                  
+                  <%-- <script>location.href="fc_getinfo_user_assign.jsp"</script> --%>
+   
+                  <!-- User 여기에 동적으로 추가됩니다. -->
+                  <table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+                     <thead>
+                        <tr>
+                           <th>User ID</th>
+                           <th>Car ID</th>
+                           <th>Date_st</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%
+                           // Get the car list from the request
+                           List<Map<String, Object>> carList2 = (List<Map<String, Object>>) request.getAttribute("carList2");
+                              if (carList2 != null && !carList2.isEmpty()) {
+                              for (Map<String, Object> car : carList2) {
+                        %>
+                        <tr>
+                           <td><%= car.get("User_id") %></td>
+                           <td><%= car.get("Car_id") %></td>
+                           <td><%= car.get("Date_st") %></td>                              
+                        </tr>
+                        <%
+                              }
+                           } else {
+                        %>
+                        <tr>
+                           <td colspan="4">No ID renting Car.</td>
+                        </tr>
+                        <%
+                              }
+                        %>
+                     </tbody>
+                  </table>   
+                  <!-- 대여 신청한 유저 출력 끝-->
+               </div>      
+            </div>            
+         </div>
+      </section>
 		<style>
 			.featured-cars .col-md-6 {
 				float: left;
