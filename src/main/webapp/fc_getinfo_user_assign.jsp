@@ -47,8 +47,7 @@
             carData.put("Car_id", rs.getString("Car_id"));
             carList1.add(carData);
         }
-        rs.close();
-        pstmt.close();
+        
 
         // 두 번째 쿼리 실행
         String sql2 = "SELECT * FROM car WHERE Date_st IS NOT NULL";
@@ -60,11 +59,13 @@
             carData.put("Car_id", rs.getString("Car_id"));
             carData.put("Date_st", rs.getString("Date_st"));
             carList2.add(carData);
-        }
-      // 데이터를 request 객체에 저장
-        request.setAttribute("carList1", carList1);
-        // 다음 JSP로 포워드
-        request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
+        }     	
+		// 데이터를 request 객체에 저장
+    	request.setAttribute("carList1", carList1);
+   		request.setAttribute("carList2", carList2);
+
+    	// Admin_rent.jsp로 포워드
+    	request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
 
    } catch(Exception e) {
       e.printStackTrace();
@@ -78,10 +79,4 @@
          e.printStackTrace();
       }
    }
-   // 데이터를 request 객체에 저장
-    request.setAttribute("carList1", carList1);
-    request.setAttribute("carList2", carList2);
-
-    // Admin_rent.jsp로 포워드
-    request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
 %>
