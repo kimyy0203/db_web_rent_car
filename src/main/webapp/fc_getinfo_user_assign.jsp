@@ -18,7 +18,6 @@
    
 
     // DB 연결에 필요한 변수 선언
-<<<<<<< HEAD
    String jdbcUrl = "jdbc:mysql://localhost:3306/rent_car";
    String dbId = "root"; // MySQL 사용자명
    String dbPwd = "0808"; // MySQL 비밀번호
@@ -39,28 +38,6 @@
       conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
       
       // 첫 번째 쿼리 실행
-=======
-	String jdbcUrl = "jdbc:mysql://localhost:3306/rent_car";
-	String dbId = "root"; // MySQL 사용자명
-	String dbPwd = "0808"; // MySQL 비밀번호
-	
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-
-	// 데이터를 저장할 리스트
-    List<Map<String, Object>> carList1 = new ArrayList<>();
-    List<Map<String, Object>> carList2 = new ArrayList<>();
-
-	try {
-		// 드라이버 호출
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		// conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
-		// 첫 번째 쿼리 실행
->>>>>>> cf2b4ea6cfbab3f12efd61dbe870c857ea8b08c9
         String sql1 = "SELECT * FROM car WHERE Date_st IS NULL";
         pstmt = conn.prepareStatement(sql1);
         rs = pstmt.executeQuery();
@@ -84,16 +61,11 @@
             carData.put("Date_st", rs.getString("Date_st"));
             carList2.add(carData);
         }
-<<<<<<< HEAD
       // 데이터를 request 객체에 저장
-=======
-		// 데이터를 request 객체에 저장
->>>>>>> cf2b4ea6cfbab3f12efd61dbe870c857ea8b08c9
         request1.setAttribute("carList1", carList1);
         // 다음 JSP로 포워드
         request1.getRequestDispatcher("Admin_rent.jsp").forward(request1, response);
 
-<<<<<<< HEAD
    } catch(Exception e) {
       e.printStackTrace();
       response.sendRedirect("Admin_rent.jsp");
@@ -107,21 +79,6 @@
       }
    }
    // 데이터를 request 객체에 저장
-=======
-	} catch(Exception e) {
-		e.printStackTrace();
-		response.sendRedirect("Admin_rent.jsp");
-	} finally {
-		try {
-			if (conn != null) conn.close();
-			if (pstmt != null) pstmt1.close();
-			if (rs != null) rs1.close();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	// 데이터를 request 객체에 저장
->>>>>>> cf2b4ea6cfbab3f12efd61dbe870c857ea8b08c9
     request.setAttribute("carList1", carList1);
     request.setAttribute("carList2", carList2);
 
