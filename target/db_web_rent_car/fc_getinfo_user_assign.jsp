@@ -2,7 +2,6 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
-
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
@@ -26,10 +25,11 @@
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	
-	// MySQL에 맞게 SQL 문 작성 (컬럼명과 테이블명도 확인 필요)
-	String sql = "SELECT * FROM car WHERE Date_st IS NULL;";
-	
+
+	// 데이터를 저장할 리스트
+    List<Map<String, Object>> carList1 = new ArrayList<>();
+    List<Map<String, Object>> carList2 = new ArrayList<>();
+
 	try {
 		// 드라이버 호출
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -37,29 +37,34 @@
 		// conn 생성
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
 		
-		// pstmt 생성
-		pstmt = conn.prepareStatement(sql);
-		
-		// SQL 실행
-		rs = pstmt.executeQuery();
-		
-		List<Map<String, Object>> carList = new ArrayList<>();
-
-		while (rs.next()) {
-            // 각 행의 데이터를 맵에 저장
+		// 첫 번째 쿼리 실행
+        String sql1 = "SELECT * FROM car WHERE Date_st IS NULL";
+        pstmt = conn.prepareStatement(sql1);
+        rs = pstmt.executeQuery();
+        while (rs.next()) {
             Map<String, Object> carData = new HashMap<>();
-			carData.put("User_id", rs.getString("User_id"));
+            carData.put("User_id", rs.getString("User_id"));
             carData.put("Car_id", rs.getString("Car_id"));
-            
-            // 리스트에 추가
-            carList.add(carData);
+            carList1.add(carData);
         }
-		
-		// 데이터를 request 객체에 저장
-        request.setAttribute("carList", carList);
+        rs.close();
+        pstmt.close();
 
+        // 두 번째 쿼리 실행
+        String sql2 = "SELECT * FROM car WHERE Date_st IS NOT NULL";
+        pstmt = conn.prepareStatement(sql2);
+        rs = pstmt.executeQuery();
+        while (rs.next()) {
+            Map<String, Object> carData = new HashMap<>();
+            carData.put("User_id", rs.getString("User_id"));
+            carData.put("Car_id", rs.getString("Car_id"));
+            carData.put("Date_st", rs.getString("Date_st"));
+            carList2.add(carData);
+        }
+		// 데이터를 request 객체에 저장
+        request1.setAttribute("carList1", carList1);
         // 다음 JSP로 포워드
-        request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
+        request1.getRequestDispatcher("Admin_rent.jsp").forward(request1, response);
 
 	} catch(Exception e) {
 		e.printStackTrace();
@@ -67,10 +72,16 @@
 	} finally {
 		try {
 			if (conn != null) conn.close();
-			if (pstmt != null) pstmt.close();
-			if (rs != null) rs.close();
+			if (pstmt != null) pstmt1.close();
+			if (rs != null) rs1.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	// 데이터를 request 객체에 저장
+    request.setAttribute("carList1", carList1);
+    request.setAttribute("carList2", carList2);
+
+    // Admin_rent.jsp로 포워드
+    request.getRequestDispatcher("Admin_rent.jsp").forward(request, response);
 %>
