@@ -73,7 +73,7 @@
 							 <!-- Collect the nav links, forms, and other content for toggling -->
 							 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-									<li class="scroll"><a href="Admin_rent.jsp" onclick="navigateTo('Admin_rent')">Car rent</a></li>
+									<li class="scroll"><a href="fc_getinfo_user_assign.jsp" onclick="navigateTo('fc_getinfo_user_assign')">Car rent</a></li>
 									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
 									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
@@ -199,7 +199,7 @@
 					if (data.success) {
 						alert("차량 삭제 성공!");
 						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.jsp";
+						window.location.href = "fc_getinfo_user_assign.jsp";
 					} else {
 						alert("차량 삭제 실패: " + data.message);
 					}
@@ -227,7 +227,7 @@
 					if (data.success) {
 						alert("차량 반납 성공!");
 						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "Admin_rent.jsp";
+						window.location.href = "fc_getinfo_user_assign.jsp";
 					} else {
 						alert("차량 반납 실패: " + data.message);
 					}
