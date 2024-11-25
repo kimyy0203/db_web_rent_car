@@ -120,7 +120,7 @@
             </div>   
             <div class="row">
                <!-- Left Column: Users waiting to rent a car -->
-               <div id="cars-list" class = "featured-cars-content">
+               <div class="featured-cars-content">
 			   	<h2>Users Waiting to Rent</h2>
                   <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
                   
@@ -161,7 +161,7 @@
                </div>         
       
                <!-- Right Column: Users currently renting a car -->
-               <div id="cars-list" class = "featured-cars-content">
+               <div class="featured-cars-content">
 			   <h2>Users currently renting</h2>
                   <!-- renting 데이터베이스에서 Date_st = null 가져오는 기능 페이지(fc_getinfo_user_assign.jsp) -->
                   
@@ -219,6 +219,22 @@
 			#waiting-users-list, #renting-users-list {
 				margin-top: 30px;
 			}
+			.featured-cars-content th, .featured-cars-content td {
+       			padding: 15px; /* 셀 안쪽 여백 */
+        		text-align: left;
+        		border: 1px solid #ddd; /* 셀 테두리 */
+    		}
+    		.featured-cars-content th {
+        		background-color: #f9f9f9; /* 헤더 배경색 */
+        		font-weight: bold;
+        		text-align: center; /* 헤더 중앙 정렬 */
+    		}
+    		.featured-cars-content td {
+       	 		background-color: #fff; /* 데이터 셀 배경색 */
+    		}
+    		.featured-cars-content th + th {
+        		padding-left: 30px; /* 헤더 간격 추가 */
+    		}
 		</style>
 		
 		<!--car-rent-start-->
