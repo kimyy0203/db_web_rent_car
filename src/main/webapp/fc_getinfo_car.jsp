@@ -28,7 +28,7 @@
 	ResultSet rs = null;
 	
 	// MySQL에 맞게 SQL 문 작성 (컬럼명과 테이블명도 확인 필요)
-	String sql = "SELECT * FROM car";
+	String sql = "SELECT * FROM car ORDER BY Car_type, Car_cost";
 	
 	try {
 		// 드라이버 호출

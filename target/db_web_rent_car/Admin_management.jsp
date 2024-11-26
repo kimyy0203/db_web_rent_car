@@ -1,8 +1,8 @@
 <%@page import="java.sql.ResultSet"%>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.HashMap" %>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -84,7 +84,7 @@
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 									<li class="scroll"><a href="fc_getinfo_user_assign.jsp" onclick="navigateTo('fc_getinfo_user_assign')">Car rent</a></li>
 									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a href="fc_getinfo_cost.jsp" onclick="navigateTo('fc_getinfo_cost')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
 							</div>

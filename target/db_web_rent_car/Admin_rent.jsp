@@ -82,7 +82,7 @@
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 									<li class="scroll"><a href="fc_getinfo_user_assign.jsp" onclick="navigateTo('fc_getinfo_user_assign')">Car rent</a></li>
 									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a href="fc_getinfo_cost.jsp" onclick="navigateTo('fc_getinfo_cost')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
 							</div>
@@ -150,7 +150,7 @@
                            } else {
                         %>
                         <tr>
-                           <td colspan="4">No ID renting Car.</td>
+                           <td colspan="2">No ID renting Car.</td>
                         </tr>
                         <%
                               }
@@ -193,7 +193,7 @@
                            } else {
                         %>
                         <tr>
-                           <td colspan="4">No ID renting Car.</td>
+                           <td colspan="3">No ID renting Car.</td>
                         </tr>
                         <%
                               }

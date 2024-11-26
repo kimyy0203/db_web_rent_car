@@ -26,6 +26,9 @@
 		// 2. conn 생성
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
 		
+        // 오토 커밋을 종료시키고, 트랜잭션이 유지되도록 한다
+        conn.setAutoCommit(false); 
+
 		// 3. 사용자 ID 유무 및 대여 상태 확인
         String checkSql = "SELECT Car_id, Date_st FROM renting WHERE User_id = ?";
         pstmt = conn.prepareStatement(checkSql);
@@ -34,6 +37,7 @@
 
 		if (!rs.next()) { // renting 테이블에 해당 User_id 없음
             response.sendRedirect("fc_release_car_fail.jsp?error=no_record");
+            conn.rollback(); // 롤백
             return;
         }
 
@@ -42,6 +46,7 @@
 
         if (Date_st == null) { // Date_st가 NULL이면 반납 불가
             response.sendRedirect("fc_release_car_fail.jsp?error=invalid_status");
+            conn.rollback(); // 롤백
             return;
         }
 
@@ -54,6 +59,7 @@
 		
 		if (updateResult == 0) { // 업데이트 실패 시
             response.sendRedirect("fc_release_car_fail.jsp?error=update_failed");
+            conn.rollback(); // 롤백
             return;
         }
 
@@ -65,6 +71,7 @@
 
         if (!rs.next()) { // Car_id가 car 테이블에 없음
             response.sendRedirect("fc_release_car_fail.jsp?error=car_not_found");
+            conn.rollback(); // 롤백
             return;
         }
 
@@ -91,6 +98,7 @@
 
         if (insertResult == 0) { // Cost 테이블에 삽입 실패
             response.sendRedirect("fc_release_car_fail.jsp?error=insert_failed");
+            conn.rollback(); // 롤백
             return;
         }
 
@@ -103,14 +111,19 @@
 
         if (deleteResult == 0) { // renting 데이터 삭제 실패
             response.sendRedirect("fc_release_car_fail.jsp?error=delete_failed");
+            conn.rollback(); // 롤백
             return;
         }
 
-         // 9. 성공 페이지로 리다이렉트
+        // 9. 성공 페이지로 리다이렉트
+        conn.commit(); // 모든 과정(sql문)이 성공 시 커밋
         response.sendRedirect("fc_release_car_succes.jsp");
 
 	} catch(Exception e){
 		e.printStackTrace();
+        if(conn != null) {
+            conn.rollback(); // 롤백
+        }
 		response.sendRedirect("fc_release_car_fail.jsp?error=exception");
 	} finally{
 		try{

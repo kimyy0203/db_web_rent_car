@@ -50,7 +50,7 @@
         
 
         // 두 번째 쿼리 실행
-        String sql2 = "SELECT * FROM renting WHERE Date_st IS NOT NULL";
+        String sql2 = "SELECT * FROM renting WHERE Date_st IS NOT NULL ORDER BY Date_st";
         pstmt = conn.prepareStatement(sql2);
         rs = pstmt.executeQuery();
         while (rs.next()) {

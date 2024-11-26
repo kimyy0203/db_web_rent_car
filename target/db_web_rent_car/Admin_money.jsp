@@ -1,3 +1,9 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -75,7 +81,7 @@
 								<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 									<li class="scroll"><a href="fc_getinfo_user_assign.jsp" onclick="navigateTo('fc_getinfo_user_assign')">Car rent</a></li>
 									<li class="scroll"><a href="fc_getinfo_car.jsp" onclick="navigateTo('fc_getinfo_car')">Car management</a></li>
-									<li class="scroll"><a href="Admin_money.jsp" onclick="navigateTo('Admin_money')">Cost</a></li>
+									<li class="scroll"><a href="fc_getinfo_cost.jsp" onclick="navigateTo('fc_getinfo_cost')">Cost</a></li>
 									<li class="scroll"><a onclick="logoutFunction()">Log out</a></li>
 								</ul>
 							</div>
@@ -111,10 +117,49 @@
 					<p>비용 정산</p>
 					<h2>Cost settlement</h2>
 				</div>				
-				<div class="col-md-6">
-					<div id="waiting-users-list" class="featured-users-content">
-					<!-- 비용 정산 목록이 여기에 추가됩니다. -->
-				    </div>
+				<div id="waiting-users-list" class="featured-users-content">
+					<!-- 차량 목록을 데이터베이스에서 가져오는 기능 페이지(fc_getinfo_car.jsp) -->
+					
+					<%-- <script>location.href="fc_getinfo_car.jsp"</script> --%>
+
+					<!-- 차량 목록이 여기에 동적으로 추가됩니다. -->
+					<table class="table table-striped" style="border: 1px solid black; border-collapse: collapse;">
+						<thead>
+							<tr>
+								<th>User ID</th>
+								<th>User Name</th>
+								<th>Date_st</th>
+								<th>Date_end</th>
+								<th>Cost_sum</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								// Get the car list from the request
+								List<Map<String, Object>> carList = (List<Map<String, Object>>) request.getAttribute("carList");
+								if (carList != null && !carList.isEmpty()) {
+									for (Map<String, Object> car : carList) {
+							%>
+							<tr>
+								<td><%= car.get("User_id") %></td>
+								<td><%= car.get("User_name") %></td>
+								<td><%= car.get("Date_st") %></td>
+								<td><%= car.get("Date_end") %></td>
+								<td><%= car.get("Cost_sum") %></td>
+							</tr>
+							<%
+									}
+								} else {
+							%>
+							<tr>
+								<td colspan="5">No rental data available at the moment.</td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+					</table>	
+					<!-- 차량 목록 테이블 출력 끝-->
 				</div>							
 			</div>
 		</section>
@@ -176,63 +221,6 @@
 		<script>
 			function logoutFunction() { // 로그아웃 버튼
 				window.location.href = `fc_logout.jsp`;
-			}
-
-			function AssignFunction1() { //승인버튼
-				const userId = document.getElementById("userId").value;
-				
-				if (!userId) {
-					alert("아이디를 다시 입력하세요.");
-					return;
-				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: userId})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("차량 삭제 성공!");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "fc_getinfo_user_assign.jsp";
-					} else {
-						alert("차량 삭제 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
-			}
-			function AssignFunction2() { //반납 버튼
-				const userId = document.getElementById("userId").value;
-				
-				if (!userId) {
-					alert("아이디를 다시 입력하세요.");
-					return;
-				}
-		
-				// 예시: 서버로 데이터를 보내는 POST 요청
-				fetch("your_login_api_endpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({id: userId})
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("차량 반납 성공!");
-						// 차량 삭제 성공 시 이동할 페이지 설정
-						window.location.href = "fc_getinfo_user_assign.jsp";
-					} else {
-						alert("차량 반납 실패: " + data.message);
-					}
-				})
-				.catch(error => console.error("Error:", error));
 			}
 		
 			// JSP 페이지로 이동
