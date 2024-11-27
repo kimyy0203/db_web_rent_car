@@ -234,6 +234,19 @@
     		}
     		.featured-cars-content th + th {
         		padding-left: 30px; /* 헤더 간격 추가 */
+				
+    		}
+			.featured-cars-content h2 {
+				font-weight: bold; /* 제목 강조 */
+        		margin-bottom: 20px; /* 제목 아래 간격 추가 */
+    		}
+    		.featured-cars-content {
+				text-align: center; /* 제목과 내용 중앙 정렬 */
+      			margin-bottom: 40px; /* 각 섹션 간격 추가 */
+    		}
+			 .featured-cars-content table {
+       			margin: 0 auto; /* 표를 중앙 정렬 */
+       			width: 110%; /* 표의 너비를 설정하여 적절히 배치 */
     		}
 		</style>
 		
