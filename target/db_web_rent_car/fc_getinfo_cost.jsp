@@ -26,9 +26,7 @@
 	ResultSet rs = null;
 	
 	// MySQL에 맞게 SQL 문 작성 (컬럼명과 테이블명도 확인 필요)
-	String sql = "SELECT cost.User_id, cost.Date_st, cost.Date_end, cost.Cost_sum, user.User_name 
-				FROM cost LEFT JOIN user ON cost.User_id = user.User_id 
-				ORDER BY Date_end, Date_st";
+	String sql = "SELECT cost.User_id, cost.Date_st, cost.Date_end, cost.Cost_sum, user.User_name FROM cost LEFT JOIN user ON cost.User_id = user.User_id ORDER BY Date_end, Date_st";
 	
 	try {
 		// 드라이버 호출

@@ -38,15 +38,12 @@
         String Car_type = request.getParameter("Car_type");
         String sql;
         if("default".equals(Car_type)) {
-            sql = "SELECT * FROM car WHERE Car_id NOT IN (SELECT Car_id FROM renting) 
-				ORDER BY Car_type, Car_cost";
+            sql = "SELECT * FROM car WHERE Car_id NOT IN (SELECT Car_id FROM renting) ORDER BY Car_type, Car_cost";
             // pstmt 생성
 		    pstmt = conn.prepareStatement(sql);
         }
         else {
-            sql = "SELECT * FROM car 
-				WHERE Car_type = ? AND Car_id NOT IN (SELECT Car_id FROM renting) 
-				ORDER BY Car_cost";
+            sql = "SELECT * FROM car WHERE Car_type = ? AND Car_id NOT IN (SELECT Car_id FROM renting) ORDER BY Car_cost";
             // pstmt 생성
 		    pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Car_type);

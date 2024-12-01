@@ -51,8 +51,7 @@
         }
 
 		// 4. 대여 반납 날짜 기록 SQL
-		String sql = "UPDATE renting SET Date_end = NOW() 
-                    WHERE User_id = ? AND Date_end IS NULL";
+		String sql = "UPDATE renting SET Date_end = NOW() WHERE User_id = ? AND Date_end IS NULL";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, User_id);	
 		
@@ -89,8 +88,7 @@
         int Cost_sum = daysRented * Car_cost;
 
         // 7. Cost 테이블에 정보 저장
-        String insertCostSql = "INSERT INTO cost (User_id, Date_st, Date_end, Cost_sum) 
-                                VALUES (?, ?, NOW(), ?)";
+        String insertCostSql = "INSERT INTO cost (User_id, Date_st, Date_end, Cost_sum) VALUES (?, ?, NOW(), ?)";
         pstmt = conn.prepareStatement(insertCostSql);
         pstmt.setString(1, User_id);
         pstmt.setDate(2, new java.sql.Date(Date_st.getTime()));
