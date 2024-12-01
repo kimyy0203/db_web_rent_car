@@ -44,7 +44,8 @@
         }
 
 		// 4. 중복이 없을 경우 데이터 삽입
-		String insertSql = "INSERT INTO car (Car_id, Car_type, Car_name, Car_cost) VALUES (?, ?, ?, ?)";
+		String insertSql = "INSERT INTO car (Car_id, Car_type, Car_name, Car_cost) 
+							VALUES (?, ?, ?, ?)";
 		pstmt = conn.prepareStatement(insertSql);
 		pstmt.setString(1, Car_id); // 차량 번호
         pstmt.setString(2, Car_type); // 차량 종류

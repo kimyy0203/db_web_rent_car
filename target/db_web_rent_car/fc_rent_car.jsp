@@ -44,8 +44,9 @@
             return;
         }
 
-		// 4. 회원가입 SQL
-		String sql = "INSERT INTO renting (User_id, Car_id, Date_st, Date_end) VALUES (?, ?, NULL, NULL)";
+		// 4. 사용자 대여 신청 SQL
+		String sql = "INSERT INTO renting (User_id, Car_id, Date_st, Date_end) 
+					VALUES (?, ?, NULL, NULL)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, User_id);
 		pstmt.setString(2, Car_id);
