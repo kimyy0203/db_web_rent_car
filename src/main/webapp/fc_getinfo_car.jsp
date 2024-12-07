@@ -33,16 +33,12 @@
 	try {
 		// 드라이버 호출
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		
 		// conn 생성
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
 		// pstmt 생성
-		pstmt = conn.prepareStatement(sql);
-		
+		pstmt = conn.prepareStatement(sql);		
 		// SQL 실행
-		rs = pstmt.executeQuery();
-		
+		rs = pstmt.executeQuery();		
 		List<Map<String, Object>> carList = new ArrayList<>();
 
 		while (rs.next()) {
@@ -55,11 +51,9 @@
 
             // 리스트에 추가
             carList.add(carData);
-        }
-		
+        }		
 		// 데이터를 request 객체에 저장
         request.setAttribute("carList", carList);
-
         // 다음 JSP로 포워드
         request.getRequestDispatcher("Admin_management.jsp").forward(request, response);
 

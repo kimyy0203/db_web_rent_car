@@ -20,15 +20,12 @@
 	ResultSet rs = null;
 
 	// 2. 아이디 중복 체크 SQL
-	String checkSql = "SELECT COUNT(*) FROM user WHERE User_id = ?";
-	
+	String checkSql = "SELECT COUNT(*) FROM user WHERE User_id = ?";	
 	try{
 		// 1. 드라이버 로드
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
+		Class.forName("com.mysql.cj.jdbc.Driver");		
 		// 2. conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
+		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);		
 		// 3. 아이디 중복 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, User_id);
@@ -41,17 +38,14 @@
             response.sendRedirect("fc_signup_fail.jsp?error=duplicate");
             return;
         }
-
 		// 4. 회원가입 SQL
 		String sql = "INSERT INTO user (User_id, User_pw, User_name) VALUES (?, ?, ?)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, User_id);
 		pstmt.setString(2, User_pw);
-		pstmt.setString(3, User_name);
-		
+		pstmt.setString(3, User_name);		
 		// 5. sql문 실행
-		int result = pstmt.executeUpdate();
-		
+		int result = pstmt.executeUpdate();		
 		if(result == 1){ // 성공
 			response.sendRedirect("fc_signup_succes.jsp");
 		} else{ // 실패

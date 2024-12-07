@@ -18,15 +18,12 @@
 	ResultSet rs = null;
 
 	// 2. 사용자 ID 유무 체크 SQL
-	String checkSql = "SELECT COUNT(*) FROM renting WHERE User_id = ?";
-	
+	String checkSql = "SELECT COUNT(*) FROM renting WHERE User_id = ?";	
 	try{
 		// 1. 드라이버 로드
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
+		Class.forName("com.mysql.cj.jdbc.Driver");		
 		// 2. conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
+		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);		
 		// 3. 신청 사용자 유무 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, User_id);
