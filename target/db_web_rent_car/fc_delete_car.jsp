@@ -40,17 +40,34 @@
             return;
         }
 
-		// 4. 해당 차량 번호가 있을 경우 데이터 삽입
-		String insertSql = "DELETE FROM car WHERE Car_id = ?";
-		pstmt = conn.prepareStatement(insertSql);
+		// 4. 대여 중인 차량은 삭제 불가능 하므로 대여 중인 차량 확인
+		String checkRentingSql = "SELECT COUNT(*) FROM renting WHERE Car_id = ?";
+		pstmt = conn.prepareStatement(checkRentingSql);
+		pstmt.setString(1, Car_id); // 차량 번호
+
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+    		count = rs.getInt(1); // 대여 중인 Car_id의 수 확인
+		} else {
+    		count = 0; // 기본값 설정
+		}
+
+		if (count > 0) { // Car_id가 reting 테이블에 존재하는 경우
+            response.sendRedirect("fc_delete_car_fail.jsp?error=duplicate");
+            return;
+        }
+
+		// 5. 해당 차량 번호가 있을 경우 데이터 삽입
+		String deleteSql = "DELETE FROM car WHERE Car_id = ?";
+		pstmt = conn.prepareStatement(deleteSql);
 		pstmt.setString(1, Car_id); // 차량 번호
        		
-		// 5. sql문 실행
+		// 6. sql문 실행
 		int result = pstmt.executeUpdate();
 		
-		if (result == 1) { // 성공적으로 추가된 경우
+		if (result == 1) { // 성공적으로 삭제된 경우
             response.sendRedirect("fc_getinfo_car.jsp");
-        } else { // 삽입 실패한 경우
+        } else { // 삭제 실패한 경우
             response.sendRedirect("fc_delete_car_fail.jsp");
         }
 		
