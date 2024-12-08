@@ -22,12 +22,12 @@
 	ResultSet rs = null;
 
 	// 2. 자동차 중복 체크 SQL
-	String checkSql = "SELECT COUNT(*) FROM car WHERE Car_id = ?";
+	String checkSql = "SELECT COUNT(*) FROM renting WHERE Car_id = ?";
 	try{
 		// 1. 드라이버 로드
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		// 2. conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
+		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);		
 		// 3. 자동차 중복 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, Car_id);
@@ -36,7 +36,7 @@
 		rs.next(); // 결과의 첫 번째 값 가져오기
         int count = rs.getInt(1); // 중복된 아이디의 수
 
-		if (count == 0) { // 중복된 차량이 없는 경우 실패, 중복된 차량이 있어야 대여 가능
+		if (count > 0) { // 중복된 차량이 있음
             response.sendRedirect("fc_rent_car_fail.jsp?error=duplicate");
             return;
         }

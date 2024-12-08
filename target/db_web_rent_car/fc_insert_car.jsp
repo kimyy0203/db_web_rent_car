@@ -21,15 +21,12 @@
 	ResultSet rs = null;
 
 	// 2. 자동차 아이디 중복 체크 SQL
-	String checkSql = "SELECT COUNT(*) FROM car WHERE Car_id = ?";
-	
+	String checkSql = "SELECT COUNT(*) FROM car WHERE Car_id = ?";	
 	try{
 		// 1. 드라이버 로드
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
+		Class.forName("com.mysql.cj.jdbc.Driver");		
 		// 2. conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
+		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);		
 		// 3. 자동차 아이디 중복 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, Car_id);
@@ -42,15 +39,13 @@
             response.sendRedirect("fc_insert_car_fail.jsp?error=duplicate");
             return;
         }
-
 		// 4. 중복이 없을 경우 데이터 삽입
 		String insertSql = "INSERT INTO car (Car_id, Car_type, Car_name, Car_cost) VALUES (?, ?, ?, ?)";
 		pstmt = conn.prepareStatement(insertSql);
 		pstmt.setString(1, Car_id); // 차량 번호
         pstmt.setString(2, Car_type); // 차량 종류
         pstmt.setString(3, Car_name); // 차량 이름
-        pstmt.setInt(4, Integer.parseInt(Car_cost)); // 차량 가격 (정수형으로 변환)
-		
+        pstmt.setInt(4, Integer.parseInt(Car_cost)); // 차량 가격 (정수형으로 변환)		
 		// 5. sql문 실행
 		int result = pstmt.executeUpdate();
 		

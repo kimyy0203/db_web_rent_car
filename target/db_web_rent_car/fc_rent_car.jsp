@@ -23,14 +23,11 @@
 
 	// 2. 자동차 중복 체크 SQL
 	String checkSql = "SELECT COUNT(*) FROM renting WHERE Car_id = ?";
-	
 	try{
 		// 1. 드라이버 로드
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		
 		// 2. conn 생성
-		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
+		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);		
 		// 3. 자동차 중복 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, Car_id);
@@ -49,8 +46,7 @@
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, User_id);
 		pstmt.setString(2, Car_id);
-		
-		
+			
 		// 5. sql문 실행
 		int result = pstmt.executeUpdate();
 		

@@ -19,14 +19,11 @@
 
 	// 2. 자동차 아이디 있는지 체크 SQL
 	String checkSql = "SELECT COUNT(*) FROM car WHERE Car_id = ?";
-	
 	try{
 		// 1. 드라이버 로드
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		
 		// 2. conn 생성
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
 		// 3. 자동차 아이디 중복 체크
         pstmt = conn.prepareStatement(checkSql);
         pstmt.setString(1, Car_id);
@@ -39,12 +36,10 @@
             response.sendRedirect("fc_delete_car_fail.jsp?error=duplicate");
             return;
         }
-
 		// 4. 대여 중인 차량은 삭제 불가능 하므로 대여 중인 차량 확인
 		String checkRentingSql = "SELECT COUNT(*) FROM renting WHERE Car_id = ?";
 		pstmt = conn.prepareStatement(checkRentingSql);
 		pstmt.setString(1, Car_id); // 차량 번호
-
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
     		count = rs.getInt(1); // 대여 중인 Car_id의 수 확인
@@ -56,15 +51,12 @@
             response.sendRedirect("fc_delete_car_fail.jsp?error=duplicate");
             return;
         }
-
-		// 5. 해당 차량 번호가 있을 경우 데이터 삽입
+		// 5. 해당 차량 번호가 있을 경우 데이터 삭제
 		String deleteSql = "DELETE FROM car WHERE Car_id = ?";
 		pstmt = conn.prepareStatement(deleteSql);
-		pstmt.setString(1, Car_id); // 차량 번호
-       		
+		pstmt.setString(1, Car_id); // 차량 번호     		
 		// 6. sql문 실행
-		int result = pstmt.executeUpdate();
-		
+		int result = pstmt.executeUpdate();	
 		if (result == 1) { // 성공적으로 삭제된 경우
             response.sendRedirect("fc_getinfo_car.jsp");
         } else { // 삭제 실패한 경우
