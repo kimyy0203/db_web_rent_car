@@ -31,13 +31,10 @@
 	try {
 		// 드라이버 호출
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		
 		// conn 생성
 		conn = DriverManager.getConnection(jdbcUrl, dbId, dbPwd);
-		
 		// pstmt 생성
 		pstmt = conn.prepareStatement(sql);
-		
 		// SQL 실행
 		rs = pstmt.executeQuery();
 		
